@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kipchimatt Supermarket — Shop online, delivered to your door</title>
+  <meta name="description" content="Kipchimatt Supermarket online shopping. Fresh produce, groceries, electronics, household and more. Pay with M-Pesa. Same-day delivery in Eldoret, Nairobi and major towns." />
+  <meta name="theme-color" content="#0f7a3a" />
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect rx='12' width='64' height='64' fill='%230f7a3a'/><text x='50%25' y='58%25' text-anchor='middle' font-family='Arial' font-weight='900' font-size='34' fill='%23ffd02e'>K</text></svg>" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ============ TOP UTILITY BAR ============ -->
+<div class="topbar">
+  <div class="container topbar__row">
+    <span>📞 Customer care: 0700 KIPCHIMATT</span>
+    <span class="topbar__sep">•</span>
+    <span>🚚 Free delivery on orders above KSh 3,000</span>
+    <span class="topbar__sep">•</span>
+    <span>💳 Pay with M-Pesa, Card or Cash on Delivery</span>
+    <span class="topbar__spacer"></span>
+    <a href="#" data-route="account">My Account</a>
+    <a href="#" data-route="orders">Track Order</a>
+    <a href="#" data-route="help">Help</a>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="header">
+  <div class="container header__row">
+    <a href="#" class="brand" data-route="home" aria-label="Kipchimatt home">
+      <span class="brand__mark">K</span>
+      <span class="brand__text">
+        <strong>Kipchimatt</strong>
+        <small>Supermarket</small>
+      </span>
+    </a>
+
+    <form class="search" id="searchForm" role="search">
+      <select id="searchCategory" aria-label="Search category">
+        <option value="all">All categories</option>
+      </select>
+      <input id="searchInput" type="search" placeholder="Search for unga, milk, sugar, TV…" aria-label="Search products" />
+      <button type="submit" class="btn btn--primary">Search</button>
+    </form>
+
+    <div class="header__actions">
+      <button class="iconbtn" data-route="account" aria-label="Account">
+        <span class="iconbtn__icon">👤</span>
+        <span class="iconbtn__label"><small>Hi there</small><strong id="accountName">Sign in</strong></span>
+      </button>
+      <button class="iconbtn" data-route="wishlist" aria-label="Wishlist">
+        <span class="iconbtn__icon">♥</span>
+        <span class="iconbtn__label"><small>Saved</small><strong><span id="wishlistCount">0</span> items</strong></span>
+      </button>
+      <button class="iconbtn iconbtn--cart" data-route="cart" aria-label="Cart">
+        <span class="iconbtn__icon">🛒<span class="badge" id="cartBadge">0</span></span>
+        <span class="iconbtn__label"><small>Cart</small><strong>KSh <span id="cartTotalMini">0</span></strong></span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="catnav">
+    <div class="container catnav__row">
+      <button class="catnav__menu" id="allCategoriesBtn">☰ All Departments</button>
+      <a href="#" data-cat="fresh">Fresh Produce</a>
+      <a href="#" data-cat="bakery">Bakery</a>
+      <a href="#" data-cat="dairy">Dairy &amp; Eggs</a>
+      <a href="#" data-cat="butchery">Butchery</a>
+      <a href="#" data-cat="pantry">Pantry</a>
+      <a href="#" data-cat="beverages">Beverages</a>
+      <a href="#" data-cat="household">Household</a>
+      <a href="#" data-cat="baby">Baby &amp; Mom</a>
+      <a href="#" data-cat="beauty">Health &amp; Beauty</a>
+      <a href="#" data-cat="electronics">Electronics</a>
+      <a href="#" data-route="offers" class="catnav__deals">🔥 Deals</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ============ MAIN ============ -->
+<main id="main" class="container">
+
+  <!-- HOME -->
+  <section class="view" data-view="home">
+    <div class="hero">
+      <div class="hero__copy">
+        <span class="pill">New • Online Shopping</span>
+        <h1>Mali safi, bei poa.<br/><span class="hero__accent">Delivered to your door.</span></h1>
+        <p>Shop thousands of products from Kipchimatt Supermarket. Fresh produce picked this morning, pantry staples, electronics and more — paid for with M-Pesa, delivered the same day.</p>
+        <div class="hero__cta">
+          <button class="btn btn--primary btn--lg" data-cat="fresh">Shop Fresh Produce</button>
+          <button class="btn btn--ghost btn--lg" data-route="offers">View Today's Deals</button>
+        </div>
+        <ul class="hero__usps">
+          <li>✅ Same-day delivery</li>
+          <li>✅ M-Pesa Express checkout</li>
+          <li>✅ KipChim Rewards points</li>
+        </ul>
+      </div>
+      <div class="hero__visual" aria-hidden="true">
+        <div class="hero__bag">
+          <div class="hero__bag-emoji">🛍️</div>
+          <div class="hero__float hero__float--1">🥬</div>
+          <div class="hero__float hero__float--2">🍞</div>
+          <div class="hero__float hero__float--3">🥛</div>
+          <div class="hero__float hero__float--4">🍅</div>
+          <div class="hero__float hero__float--5">📺</div>
+        </div>
+      </div>
+    </div>
+
+    <section class="categories">
+      <div class="section__head">
+        <h2>Shop by department</h2>
+        <a href="#" data-route="catalog">See all →</a>
+      </div>
+      <div class="cat-grid" id="catGrid"></div>
+    </section>
+
+    <section>
+      <div class="section__head">
+        <h2>🔥 Today's hot deals</h2>
+        <a href="#" data-route="offers">View all →</a>
+      </div>
+      <div class="product-grid" id="dealsGrid"></div>
+    </section>
+
+    <section class="banners">
+      <div class="banner banner--mpesa">
+        <div>
+          <h3>Pay seamlessly with M-Pesa</h3>
+          <p>STK push to your phone. No paybill numbers, no till numbers, no errors.</p>
+        </div>
+        <div class="banner__icon">📱</div>
+      </div>
+      <div class="banner banner--rewards">
+        <div>
+          <h3>KipChim Rewards</h3>
+          <p>Earn 1 point for every KSh 100 spent. Redeem at checkout.</p>
+        </div>
+        <div class="banner__icon">⭐</div>
+      </div>
+      <div class="banner banner--delivery">
+        <div>
+          <h3>Same-day delivery</h3>
+          <p>Order before 2pm and we deliver before sunset in major towns.</p>
+        </div>
+        <div class="banner__icon">🚚</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section__head">
+        <h2>Fresh from the farm 🥬</h2>
+        <a href="#" data-cat="fresh">See all →</a>
+      </div>
+      <div class="product-grid" id="freshGrid"></div>
+    </section>
+
+    <section>
+      <div class="section__head">
+        <h2>Trending in Electronics 📺</h2>
+        <a href="#" data-cat="electronics">See all →</a>
+      </div>
+      <div class="product-grid" id="electronicsGrid"></div>
+    </section>
+  </section>
+
+  <!-- CATALOG -->
+  <section class="view" data-view="catalog" hidden>
+    <div class="catalog">
+      <aside class="filters" aria-label="Filters">
+        <h3>Filters</h3>
+
+        <div class="filter">
+          <h4>Category</h4>
+          <ul id="filterCategories" class="filter__list"></ul>
+        </div>
+
+        <div class="filter">
+          <h4>Price (KSh)</h4>
+          <div class="filter__price">
+            <input type="number" id="priceMin" placeholder="Min" min="0" />
+            <span>—</span>
+            <input type="number" id="priceMax" placeholder="Max" min="0" />
+          </div>
+          <button class="btn btn--ghost btn--sm" id="applyPrice">Apply</button>
+        </div>
+
+        <div class="filter">
+          <h4>Rating</h4>
+          <ul class="filter__list">
+            <li><label><input type="checkbox" name="rating" value="4"> 4★ &amp; up</label></li>
+            <li><label><input type="checkbox" name="rating" value="3"> 3★ &amp; up</label></li>
+          </ul>
+        </div>
+
+        <div class="filter">
+          <h4>Offers</h4>
+          <ul class="filter__list">
+            <li><label><input type="checkbox" id="onlyDeals"> On offer</label></li>
+            <li><label><input type="checkbox" id="onlyInStock" checked> In stock</label></li>
+          </ul>
+        </div>
+
+        <button class="btn btn--ghost btn--block" id="clearFilters">Clear filters</button>
+      </aside>
+
+      <div class="catalog__main">
+        <div class="catalog__head">
+          <div>
+            <h2 id="catalogTitle">All products</h2>
+            <p class="muted" id="catalogCount">—</p>
+          </div>
+          <div class="sort">
+            <label for="sortBy">Sort:</label>
+            <select id="sortBy">
+              <option value="relevance">Relevance</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="rating">Top rated</option>
+              <option value="newest">Newest</option>
+            </select>
+          </div>
+        </div>
+        <div class="product-grid" id="catalogGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCT DETAIL -->
+  <section class="view" data-view="product" hidden>
+    <a href="#" class="back" data-route="catalog">← Back to results</a>
+    <div class="pdp" id="pdp"></div>
+  </section>
+
+  <!-- CART -->
+  <section class="view" data-view="cart" hidden>
+    <h1>Your cart</h1>
+    <div class="cart" id="cartView"></div>
+  </section>
+
+  <!-- CHECKOUT -->
+  <section class="view" data-view="checkout" hidden>
+    <h1>Checkout</h1>
+    <div class="checkout" id="checkoutView"></div>
+  </section>
+
+  <!-- OFFERS -->
+  <section class="view" data-view="offers" hidden>
+    <div class="section__head">
+      <h2>🔥 All current deals</h2>
+      <p class="muted">Save big across every department. Updated daily.</p>
+    </div>
+    <div class="product-grid" id="offersGrid"></div>
+  </section>
+
+  <!-- ACCOUNT -->
+  <section class="view" data-view="account" hidden>
+    <h1>My Account</h1>
+    <div class="account" id="accountView"></div>
+  </section>
+
+  <!-- ORDERS -->
+  <section class="view" data-view="orders" hidden>
+    <h1>My Orders</h1>
+    <div id="ordersView"></div>
+  </section>
+
+  <!-- WISHLIST -->
+  <section class="view" data-view="wishlist" hidden>
+    <h1>My Wishlist</h1>
+    <div class="product-grid" id="wishlistGrid"></div>
+    <p class="muted" id="wishlistEmpty" hidden>Your wishlist is empty. Tap the ♥ on any product to save it for later.</p>
+  </section>
+
+  <!-- HELP -->
+  <section class="view" data-view="help" hidden>
+    <h1>Help &amp; Support</h1>
+    <div class="help">
+      <details open><summary>How does delivery work?</summary><p>We deliver same-day in Eldoret, Nairobi, Kisumu, Nakuru and Mombasa for orders placed before 2pm. Next-day for outlying towns. Delivery is free above KSh 3,000.</p></details>
+      <details><summary>How do I pay?</summary><p>M-Pesa Express (STK push) is fastest. We also accept Visa/Mastercard and Cash on Delivery up to KSh 10,000.</p></details>
+      <details><summary>Can I return an item?</summary><p>Yes. Fresh produce within 24h, packaged goods within 7 days, electronics within 14 days. Bring the item plus the receipt to any branch.</p></details>
+      <details><summary>What is KipChim Rewards?</summary><p>You earn 1 point for every KSh 100 spent. 100 points = KSh 50 off. Redeem at checkout.</p></details>
+      <details><summary>Talk to a human</summary><p>Call <strong>0700 KIPCHIMATT</strong> or WhatsApp <strong>0700 547 244</strong>, 7am–9pm daily.</p></details>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container footer__grid">
+    <div>
+      <div class="brand brand--footer">
+        <span class="brand__mark">K</span>
+        <span class="brand__text"><strong>Kipchimatt</strong><small>Supermarket</small></span>
+      </div>
+      <p class="muted">Serving Kenyan families with the freshest produce, the lowest prices and the warmest service since 1998.</p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <ul class="links">
+        <li><a href="#" data-cat="fresh">Fresh Produce</a></li>
+        <li><a href="#" data-cat="pantry">Pantry</a></li>
+        <li><a href="#" data-cat="electronics">Electronics</a></li>
+        <li><a href="#" data-route="offers">Deals</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Help</h4>
+      <ul class="links">
+        <li><a href="#" data-route="help">FAQ</a></li>
+        <li><a href="#" data-route="orders">Track Order</a></li>
+        <li><a href="#" data-route="account">My Account</a></li>
+        <li><a href="#" data-route="help">Returns &amp; Refunds</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Our Branches</h4>
+      <ul class="links">
+        <li>Eldoret — Uganda Road</li>
+        <li>Eldoret — Kapsoya</li>
+        <li>Nairobi — Kasarani</li>
+        <li>Kitale — Kenyatta Street</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Stay in the loop</h4>
+      <p class="muted">Get weekly deals straight to your inbox.</p>
+      <form class="newsletter" onsubmit="event.preventDefault();this.querySelector('button').textContent='✓ Subscribed';">
+        <input type="email" placeholder="you@example.com" required />
+        <button class="btn btn--primary">Subscribe</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer__legal container">
+    <span>© <span id="year"></span> Kipchimatt Supermarket Ltd. All rights reserved.</span>
+    <span>🇰🇪 Made in Kenya</span>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<!-- Modal -->
+<div id="modal" class="modal" hidden>
+  <div class="modal__backdrop" data-close></div>
+  <div class="modal__panel" role="dialog" aria-modal="true">
+    <button class="modal__close" data-close aria-label="Close">×</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
