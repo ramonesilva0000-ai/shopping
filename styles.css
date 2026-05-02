@@ -332,6 +332,7 @@ ul{margin:0;padding:0;list-style:none}
 
 /* ============ MODAL ============ */
 .modal{position:fixed;inset:0;z-index:300;display:grid;place-items:center}
+.modal[hidden]{display:none}
 .modal__backdrop{position:absolute;inset:0;background:rgba(15,20,32,.55)}
 .modal__panel{position:relative;background:#fff;border-radius:var(--radius);padding:28px;width:min(440px,92vw);box-shadow:0 20px 60px rgba(0,0,0,.3)}
 .modal__close{position:absolute;top:8px;right:12px;font-size:1.6rem;color:var(--muted)}
