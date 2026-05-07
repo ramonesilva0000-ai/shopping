@@ -372,8 +372,8 @@ function chartSVG(history){
     return `${x.toFixed(1)},${y.toFixed(1)}`;
   }).join(" ");
   return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
-    <polyline points="${pts}" fill="none" stroke="#0f7a3a" stroke-width="2"/>
-    <circle cx="${pad + (history.length-1)*step}" cy="${pad + (1-(history[history.length-1]-min)/(max-min||1))*(h-pad*2)}" r="3.5" fill="#ffd02e" stroke="#0a5a2a" stroke-width="1.5"/>
+    <polyline points="${pts}" fill="none" stroke="#e62628" stroke-width="2"/>
+    <circle cx="${pad + (history.length-1)*step}" cy="${pad + (1-(history[history.length-1]-min)/(max-min||1))*(h-pad*2)}" r="3.5" fill="#ffd500" stroke="#b0181c" stroke-width="1.5"/>
   </svg>`;
 }
 function renderProduct(id){
