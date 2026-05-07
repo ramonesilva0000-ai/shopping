@@ -3,26 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kipchimatt Supermarket — Shop online, delivered to your door</title>
-  <meta name="description" content="Kipchimatt Supermarket online shopping. Fresh produce, groceries, electronics, household and more. Pay with M-Pesa. Same-day delivery in Eldoret, Nairobi and major towns." />
+  <title>Kipchimatt — Your Reliable Partner, online</title>
+  <meta name="description" content="Kipchimatt online — your reliable partner for fresh produce, groceries, electronics and house brands. Shop with family on Pamoja Cart, cook with Mpishi, budget with Bei Yangu, send home with Tuma Nyumbani, pay pole pole. A Kipchimchim Group company." />
   <meta name="theme-color" content="#0f7a3a" />
   <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect rx='12' width='64' height='64' fill='%230f7a3a'/><text x='50%25' y='58%25' text-anchor='middle' font-family='Arial' font-weight='900' font-size='34' fill='%23ffd02e'>K</text></svg>" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-<!-- ============ TOP UTILITY BAR ============ -->
-<div class="topbar">
-  <div class="container topbar__row">
-    <span>📞 Customer care: 0700 KIPCHIMATT</span>
-    <span class="topbar__sep">•</span>
-    <span>🚚 Free delivery on orders above KSh 3,000</span>
-    <span class="topbar__sep">•</span>
-    <span>💳 Pay with M-Pesa, Card or Cash on Delivery</span>
-    <span class="topbar__spacer"></span>
-    <a href="#" data-route="account">My Account</a>
-    <a href="#" data-route="orders">Track Order</a>
-    <a href="#" data-route="help">Help</a>
+<!-- ============ TOP TICKER ============ >
+<div class="ticker" id="ticker">
+  <div class="ticker__track">
+    <span>🔥 Bei Bomba ya leo: <strong>Sukuma Wiki KSh 20</strong> only — <span id="tickerTimer">02:14:33</span></span>
+    <span>📞 Order via USSD <strong>*483*KCM#</strong> — works on any phone, no internet needed</span>
+    <span>💬 WhatsApp <strong>0700 547 244</strong> to order by chat</span>
+    <span>🇰🇪 Built in Eldoret, for Kenya</span>
+    <span>👨‍👩‍👧 <strong id="liveShoppers">847</strong> Kenyans shopping on Kipchimatt right now</span>
   </div>
 </div>
 
@@ -33,7 +29,7 @@
       <span class="brand__mark">K</span>
       <span class="brand__text">
         <strong>Kipchimatt</strong>
-        <small>Supermarket</small>
+        <small>Your Reliable Partner</small>
       </span>
     </a>
 
@@ -41,11 +37,16 @@
       <select id="searchCategory" aria-label="Search category">
         <option value="all">All categories</option>
       </select>
-      <input id="searchInput" type="search" placeholder="Search for unga, milk, sugar, TV…" aria-label="Search products" />
+      <input id="searchInput" type="search" placeholder="Tafuta unga, maziwa, sukari, TV…" aria-label="Search products" />
+      <button type="button" class="search__mic" id="micBtn" aria-label="Voice search in Swahili or English" title="Sema kwa Kiswahili au English">🎙️</button>
       <button type="submit" class="btn btn--primary">Search</button>
     </form>
 
     <div class="header__actions">
+      <button class="iconbtn iconbtn--pamoja" data-route="pamoja" aria-label="Pamoja Cart" title="Shop together with family or chama">
+        <span class="iconbtn__icon">👨‍👩‍👧<span class="badge badge--gold" id="pamojaBadge" hidden>•</span></span>
+        <span class="iconbtn__label"><small>Pamoja</small><strong id="pamojaLabel">Group cart</strong></span>
+      </button>
       <button class="iconbtn" data-route="account" aria-label="Account">
         <span class="iconbtn__icon">👤</span>
         <span class="iconbtn__label"><small>Hi there</small><strong id="accountName">Sign in</strong></span>
@@ -71,10 +72,10 @@
       <a href="#" data-cat="pantry">Pantry</a>
       <a href="#" data-cat="beverages">Beverages</a>
       <a href="#" data-cat="household">Household</a>
-      <a href="#" data-cat="baby">Baby &amp; Mom</a>
-      <a href="#" data-cat="beauty">Health &amp; Beauty</a>
       <a href="#" data-cat="electronics">Electronics</a>
-      <a href="#" data-route="offers" class="catnav__deals">🔥 Deals</a>
+      <a href="#" data-route="mpishi" class="catnav__special">🍳 Mpishi</a>
+      <a href="#" data-route="beiYangu" class="catnav__special">💰 Bei Yangu</a>
+      <a href="#" data-route="offers" class="catnav__deals">🔥 Bei Bomba</a>
     </div>
   </nav>
 </header>
@@ -82,35 +83,112 @@
 <!-- ============ MAIN ============ -->
 <main id="main" class="container">
 
+  <!-- ============================================================ -->
   <!-- HOME -->
+  <!-- ============================================================ -->
   <section class="view" data-view="home">
-    <div class="hero">
-      <div class="hero__copy">
-        <span class="pill">New • Online Shopping</span>
-        <h1>Mali safi, bei poa.<br/><span class="hero__accent">Delivered to your door.</span></h1>
-        <p>Shop thousands of products from Kipchimatt Supermarket. Fresh produce picked this morning, pantry staples, electronics and more — paid for with M-Pesa, delivered the same day.</p>
-        <div class="hero__cta">
-          <button class="btn btn--primary btn--lg" data-cat="fresh">Shop Fresh Produce</button>
-          <button class="btn btn--ghost btn--lg" data-route="offers">View Today's Deals</button>
+
+    <!-- BOLD HERO -->
+    <div class="herox">
+      <div class="herox__left">
+        <span class="badge-stamp">🎉 25 years · Now K-matt · Welcome to digital</span>
+        <h1 class="herox__title">Your reliable<br/><span>partner — online.</span></h1>
+        <p class="herox__lede">From a small kiosk in Kericho in 1998 to 8 supermarkets across the North Rift and South-Western Kenya. Now Kipchimatt comes home to your phone — built for how Kenyans actually shop. Together with family. On a budget. Cooking real food. Sending mali home. Paying pole pole.</p>
+        <div class="herox__cta">
+          <button class="btn btn--gold btn--lg" data-route="catalog">Shop now →</button>
+          <button class="btn btn--ghost-light btn--lg" data-route="mpishi">🍳 Cook with Mpishi</button>
         </div>
-        <ul class="hero__usps">
-          <li>✅ Same-day delivery</li>
-          <li>✅ M-Pesa Express checkout</li>
-          <li>✅ KipChim Rewards points</li>
-        </ul>
+        <div class="herox__live">
+          <span class="dot dot--live"></span>
+          <span><strong id="heroLiveCount">847</strong> Kenyans shopping right now · <strong id="heroSaved">KSh 12.4M</strong> saved this month</span>
+        </div>
       </div>
-      <div class="hero__visual" aria-hidden="true">
-        <div class="hero__bag">
-          <div class="hero__bag-emoji">🛍️</div>
-          <div class="hero__float hero__float--1">🥬</div>
-          <div class="hero__float hero__float--2">🍞</div>
-          <div class="hero__float hero__float--3">🥛</div>
-          <div class="hero__float hero__float--4">🍅</div>
-          <div class="hero__float hero__float--5">📺</div>
+      <div class="herox__right">
+        <div class="phonemock">
+          <div class="phonemock__notch"></div>
+          <div class="phonemock__screen">
+            <div class="pm__bar">9:41 · Kipchimatt</div>
+            <div class="pm__hero">Habari, Wanjiku 👋</div>
+            <div class="pm__grid">
+              <div>👨‍👩‍👧<small>Pamoja</small></div>
+              <div>🍳<small>Mpishi</small></div>
+              <div>💰<small>Bei Yangu</small></div>
+              <div>✈️<small>Tuma</small></div>
+            </div>
+            <div class="pm__deal">🔥 Bei Bomba<br/><strong>Sukuma KSh 20</strong></div>
+            <div class="pm__boda">🛵 Boda 4 min away</div>
+          </div>
+        </div>
+        <div class="herox__floats">
+          <span style="--d:0s">🥬</span>
+          <span style="--d:.3s">🍞</span>
+          <span style="--d:.6s">🥛</span>
+          <span style="--d:.9s">🍅</span>
         </div>
       </div>
     </div>
 
+    <!-- ONLY ON KIPCHIMATT — the differentiators -->
+    <section class="onlykcm">
+      <div class="onlykcm__head">
+        <span class="badge-stamp badge-stamp--red">ONLY ON KIPCHIMATT</span>
+        <h2>Six things no other Kenyan supermarket does.</h2>
+        <p class="muted">Tap any tile to try it live.</p>
+      </div>
+      <div class="onlykcm__grid">
+        <button class="ftile ftile--green" data-route="pamoja">
+          <span class="ftile__emoji">👨‍👩‍👧</span>
+          <h3>Pamoja Cart</h3>
+          <p>One cart, whole family. Mum adds maziwa, dad adds nyama, all from different phones. Hit bulk discounts together.</p>
+          <span class="ftile__cta">Start a group cart →</span>
+        </button>
+        <button class="ftile ftile--gold" data-route="mpishi">
+          <span class="ftile__emoji">🍳</span>
+          <h3>Mpishi</h3>
+          <p>Choose ugali na sukuma, pilau, chapati, mukimo. We auto-add every ingredient sized to your family.</p>
+          <span class="ftile__cta">Pick a recipe →</span>
+        </button>
+        <button class="ftile ftile--ink" data-route="beiYangu">
+          <span class="ftile__emoji">💰</span>
+          <h3>Bei Yangu</h3>
+          <p>"I have KSh 2,000 this week." We build a smart basket that fits — with the most nutrition per shilling.</p>
+          <span class="ftile__cta">Tell us your budget →</span>
+        </button>
+        <button class="ftile ftile--green" data-route="tuma">
+          <span class="ftile__emoji">✈️</span>
+          <h3>Tuma Nyumbani</h3>
+          <p>In Toronto and mum needs sugar in Kapsabet? Send shopping straight to her — with a voice note.</p>
+          <span class="ftile__cta">Send shopping home →</span>
+        </button>
+        <button class="ftile ftile--gold" data-route="lipa">
+          <span class="ftile__emoji">🐢</span>
+          <h3>Lipa Pole Pole</h3>
+          <p>Buy that 43-inch TV today, pay in 3 monthly chunks via M-Pesa. No interest. No drama.</p>
+          <span class="ftile__cta">See how it works →</span>
+        </button>
+        <button class="ftile ftile--ink" data-route="mamamboga">
+          <span class="ftile__emoji">🏪</span>
+          <h3>Mama Mboga Pickup</h3>
+          <p>Collect your shopping from the local kiosk on your street. They earn a tip. You skip delivery fees.</p>
+          <span class="ftile__cta">Find kiosks near you →</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- BEI BOMBA YA LEO — daily flash deal -->
+    <section class="beibomba">
+      <div class="beibomba__inner">
+        <div>
+          <span class="badge-stamp badge-stamp--red">🔥 BEI BOMBA YA LEO</span>
+          <h2>Sukuma Wiki — KSh 20 only</h2>
+          <p>Down from KSh 40. Ends in <strong id="bombaTimer">02:14:33</strong>. Limit 5 bunches per family.</p>
+          <button class="btn btn--gold btn--lg" data-add-deal="p1" data-qty="3">Grab 3 bunches now</button>
+        </div>
+        <div class="beibomba__veg">🥬</div>
+      </div>
+    </section>
+
+    <!-- DEPARTMENTS -->
     <section class="categories">
       <div class="section__head">
         <h2>Shop by department</h2>
@@ -119,36 +197,37 @@
       <div class="cat-grid" id="catGrid"></div>
     </section>
 
+    <!-- BANNERS -->
+    <section class="banners">
+      <div class="banner banner--mpesa">
+        <div>
+          <h3>📱 M-Pesa Express + Lipa Pole Pole</h3>
+          <p>STK Push or split into 3 payments. Your choice.</p>
+        </div>
+        <div class="banner__icon">💚</div>
+      </div>
+      <div class="banner banner--rewards">
+        <div>
+          <h3>⭐ KipChim Points + Spin Daily</h3>
+          <p>1 point per KSh 100. Spin the wheel every day for bonus.</p>
+        </div>
+        <div class="banner__icon">🎡</div>
+      </div>
+      <div class="banner banner--delivery">
+        <div>
+          <h3>🛵 Live boda tracking</h3>
+          <p>Watch your rider on the map. ETA to the minute.</p>
+        </div>
+        <div class="banner__icon">🗺️</div>
+      </div>
+    </section>
+
     <section>
       <div class="section__head">
         <h2>🔥 Today's hot deals</h2>
         <a href="#" data-route="offers">View all →</a>
       </div>
       <div class="product-grid" id="dealsGrid"></div>
-    </section>
-
-    <section class="banners">
-      <div class="banner banner--mpesa">
-        <div>
-          <h3>Pay seamlessly with M-Pesa</h3>
-          <p>STK push to your phone. No paybill numbers, no till numbers, no errors.</p>
-        </div>
-        <div class="banner__icon">📱</div>
-      </div>
-      <div class="banner banner--rewards">
-        <div>
-          <h3>KipChim Rewards</h3>
-          <p>Earn 1 point for every KSh 100 spent. Redeem at checkout.</p>
-        </div>
-        <div class="banner__icon">⭐</div>
-      </div>
-      <div class="banner banner--delivery">
-        <div>
-          <h3>Same-day delivery</h3>
-          <p>Order before 2pm and we deliver before sunset in major towns.</p>
-        </div>
-        <div class="banner__icon">🚚</div>
-      </div>
     </section>
 
     <section>
@@ -166,19 +245,99 @@
       </div>
       <div class="product-grid" id="electronicsGrid"></div>
     </section>
+
+    <!-- WHY KIPCHIMATT for the directors -->
+    <section class="whystrip">
+      <div><strong>8 branches</strong><span>Kapsoit to Eldoret · ready to ship</span></div>
+      <div><strong>25 years</strong><span>Of trust — Kericho to the nation</span></div>
+      <div><strong>0% commission</strong><span>No more Glovo / Jumia cuts</span></div>
+      <div><strong>3× basket</strong><span>Online vs walk-in (industry avg)</span></div>
+    </section>
   </section>
 
+  <!-- ============================================================ -->
+  <!-- PAMOJA CART -->
+  <!-- ============================================================ -->
+  <section class="view" data-view="pamoja" hidden>
+    <div class="page-hero page-hero--green">
+      <span class="badge-stamp">ONLY ON KIPCHIMATT</span>
+      <h1>👨‍👩‍👧 Pamoja Cart</h1>
+      <p>One shared cart for the whole family or chama. Everyone adds from their own phone. We split the bill, hit the bulk discount, deliver to one address.</p>
+    </div>
+    <div id="pamojaView"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- MPISHI -->
+  <!-- ============================================================ -->
+  <section class="view" data-view="mpishi" hidden>
+    <div class="page-hero page-hero--gold">
+      <span class="badge-stamp">ONLY ON KIPCHIMATT</span>
+      <h1>🍳 Mpishi — your shopping chef</h1>
+      <p>Pick a Kenyan favourite. Tell us how many you're cooking for. We add every ingredient to your cart, sized perfectly. No more "ah, I forgot dhania."</p>
+    </div>
+    <div class="recipe-grid" id="recipeGrid"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- BEI YANGU -->
+  <!-- ============================================================ -->
+  <section class="view" data-view="beiYangu" hidden>
+    <div class="page-hero page-hero--ink">
+      <span class="badge-stamp">ONLY ON KIPCHIMATT</span>
+      <h1>💰 Bei Yangu — shop to your budget</h1>
+      <p>Tell us how much you have. We build the smartest basket of essentials that fits — maximising calories, freshness and variety per shilling.</p>
+    </div>
+    <div class="bbuilder" id="bbuilderView"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- TUMA NYUMBANI -->
+  <!-- ============================================================ -->
+  <section class="view" data-view="tuma" hidden>
+    <div class="page-hero page-hero--green">
+      <span class="badge-stamp">ONLY ON KIPCHIMATT</span>
+      <h1>✈️ Tuma Nyumbani</h1>
+      <p>For everyone in the diaspora — and everyone in Nairobi who has folks upcountry. Send a full shop to your family with a personal voice note attached.</p>
+    </div>
+    <div class="tuma" id="tumaView"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- LIPA POLE POLE -->
+  <!-- ============================================================ -->
+  <section class="view" data-view="lipa" hidden>
+    <div class="page-hero page-hero--gold">
+      <span class="badge-stamp">ONLY ON KIPCHIMATT</span>
+      <h1>🐢 Lipa Pole Pole</h1>
+      <p>Buy now. Pay in 3. Zero interest. Available on items above KSh 5,000. Approval in 60 seconds via M-Pesa.</p>
+    </div>
+    <div class="lipa" id="lipaView"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- MAMA MBOGA -->
+  <!-- ============================================================ -->
+  <section class="view" data-view="mamamboga" hidden>
+    <div class="page-hero page-hero--ink">
+      <span class="badge-stamp">ONLY ON KIPCHIMATT</span>
+      <h1>🏪 Mama Mboga Pickup</h1>
+      <p>1,200+ neighbourhood kiosks now act as Kipchimatt collection points. Skip the delivery fee. Walk 200m. Mama earns a small tip. Win-win-win.</p>
+    </div>
+    <div class="mboga" id="mbogaView"></div>
+  </section>
+
+  <!-- ============================================================ -->
   <!-- CATALOG -->
+  <!-- ============================================================ -->
   <section class="view" data-view="catalog" hidden>
     <div class="catalog">
       <aside class="filters" aria-label="Filters">
         <h3>Filters</h3>
-
         <div class="filter">
           <h4>Category</h4>
           <ul id="filterCategories" class="filter__list"></ul>
         </div>
-
         <div class="filter">
           <h4>Price (KSh)</h4>
           <div class="filter__price">
@@ -188,26 +347,15 @@
           </div>
           <button class="btn btn--ghost btn--sm" id="applyPrice">Apply</button>
         </div>
-
-        <div class="filter">
-          <h4>Rating</h4>
-          <ul class="filter__list">
-            <li><label><input type="checkbox" name="rating" value="4"> 4★ &amp; up</label></li>
-            <li><label><input type="checkbox" name="rating" value="3"> 3★ &amp; up</label></li>
-          </ul>
-        </div>
-
         <div class="filter">
           <h4>Offers</h4>
           <ul class="filter__list">
             <li><label><input type="checkbox" id="onlyDeals"> On offer</label></li>
-            <li><label><input type="checkbox" id="onlyInStock" checked> In stock</label></li>
+            <li><label><input type="checkbox" id="onlyLipa"> Lipa Pole Pole eligible</label></li>
           </ul>
         </div>
-
         <button class="btn btn--ghost btn--block" id="clearFilters">Clear filters</button>
       </aside>
-
       <div class="catalog__main">
         <div class="catalog__head">
           <div>
@@ -221,7 +369,6 @@
               <option value="price-asc">Price: Low to High</option>
               <option value="price-desc">Price: High to Low</option>
               <option value="rating">Top rated</option>
-              <option value="newest">Newest</option>
             </select>
           </div>
         </div>
@@ -230,19 +377,25 @@
     </div>
   </section>
 
+  <!-- ============================================================ -->
   <!-- PRODUCT DETAIL -->
+  <!-- ============================================================ -->
   <section class="view" data-view="product" hidden>
     <a href="#" class="back" data-route="catalog">← Back to results</a>
     <div class="pdp" id="pdp"></div>
   </section>
 
+  <!-- ============================================================ -->
   <!-- CART -->
+  <!-- ============================================================ -->
   <section class="view" data-view="cart" hidden>
     <h1>Your cart</h1>
     <div class="cart" id="cartView"></div>
   </section>
 
+  <!-- ============================================================ -->
   <!-- CHECKOUT -->
+  <!-- ============================================================ -->
   <section class="view" data-view="checkout" hidden>
     <h1>Checkout</h1>
     <div class="checkout" id="checkoutView"></div>
@@ -251,8 +404,8 @@
   <!-- OFFERS -->
   <section class="view" data-view="offers" hidden>
     <div class="section__head">
-      <h2>🔥 All current deals</h2>
-      <p class="muted">Save big across every department. Updated daily.</p>
+      <h2>🔥 Bei Bomba — all current deals</h2>
+      <p class="muted">Updated daily across every department.</p>
     </div>
     <div class="product-grid" id="offersGrid"></div>
   </section>
@@ -280,11 +433,12 @@
   <section class="view" data-view="help" hidden>
     <h1>Help &amp; Support</h1>
     <div class="help">
-      <details open><summary>How does delivery work?</summary><p>We deliver same-day in Eldoret, Nairobi, Kisumu, Nakuru and Mombasa for orders placed before 2pm. Next-day for outlying towns. Delivery is free above KSh 3,000.</p></details>
-      <details><summary>How do I pay?</summary><p>M-Pesa Express (STK push) is fastest. We also accept Visa/Mastercard and Cash on Delivery up to KSh 10,000.</p></details>
-      <details><summary>Can I return an item?</summary><p>Yes. Fresh produce within 24h, packaged goods within 7 days, electronics within 14 days. Bring the item plus the receipt to any branch.</p></details>
-      <details><summary>What is KipChim Rewards?</summary><p>You earn 1 point for every KSh 100 spent. 100 points = KSh 50 off. Redeem at checkout.</p></details>
-      <details><summary>Talk to a human</summary><p>Call <strong>0700 KIPCHIMATT</strong> or WhatsApp <strong>0700 547 244</strong>, 7am–9pm daily.</p></details>
+      <details open><summary>How does delivery work?</summary><p>We deliver same-day in Eldoret, Nairobi, Kisumu, Nakuru and Mombasa for orders placed before 2pm. Boda riders for under 10kg, vans for big shops. Live tracking on every order.</p></details>
+      <details><summary>What is Pamoja Cart?</summary><p>A shared cart for households or chamas. Start one, share the link, everyone adds from their phone. We pool the order to unlock bulk discounts.</p></details>
+      <details><summary>What is Lipa Pole Pole?</summary><p>Pay-later for items above KSh 5,000. Split the cost into 3 monthly payments via M-Pesa. Zero interest if you pay on time.</p></details>
+      <details><summary>How does Tuma Nyumbani work?</summary><p>Choose products, then in checkout select "Send to someone else" — enter their address and phone. Optionally record a voice note that we deliver with the package.</p></details>
+      <details><summary>Can I order without a smartphone?</summary><p>Yes. Dial <strong>*483*KCM#</strong> on any phone, or WhatsApp <strong>0700 547 244</strong>. Our team will help you place the order.</p></details>
+      <details><summary>Talk to a human</summary><p>Call <strong>0700 KIPCHIMATT</strong>, 7am–9pm daily. Or pop into any branch.</p></details>
     </div>
   </section>
 
@@ -296,49 +450,54 @@
     <div>
       <div class="brand brand--footer">
         <span class="brand__mark">K</span>
-        <span class="brand__text"><strong>Kipchimatt</strong><small>Supermarket</small></span>
+        <span class="brand__text"><strong>Kipchimatt</strong><small>Soko mtaani · Mzigo nyumbani</small></span>
       </div>
-      <p class="muted">Serving Kenyan families with the freshest produce, the lowest prices and the warmest service since 1998.</p>
+      <p class="muted">8 branches across Kericho, Bomet and the North Rift. From a small Kericho kiosk in 1998 to a Kenyan retail group. Featuring our house brands: Kipchimatt Bread, Mbogo Tea, Valley Sugar, Keben Tea and Mbogo Water.</p>
+      <p class="muted" style="font-size:.8rem">A Kipchimchim Group company.</p>
     </div>
     <div>
-      <h4>Shop</h4>
+      <h4>Only on Kipchimatt</h4>
       <ul class="links">
-        <li><a href="#" data-cat="fresh">Fresh Produce</a></li>
-        <li><a href="#" data-cat="pantry">Pantry</a></li>
-        <li><a href="#" data-cat="electronics">Electronics</a></li>
-        <li><a href="#" data-route="offers">Deals</a></li>
+        <li><a href="#" data-route="pamoja">Pamoja Cart</a></li>
+        <li><a href="#" data-route="mpishi">Mpishi recipes</a></li>
+        <li><a href="#" data-route="beiYangu">Bei Yangu budget</a></li>
+        <li><a href="#" data-route="tuma">Tuma Nyumbani</a></li>
+        <li><a href="#" data-route="lipa">Lipa Pole Pole</a></li>
+        <li><a href="#" data-route="mamamboga">Mama Mboga pickup</a></li>
       </ul>
     </div>
     <div>
       <h4>Help</h4>
       <ul class="links">
         <li><a href="#" data-route="help">FAQ</a></li>
-        <li><a href="#" data-route="orders">Track Order</a></li>
-        <li><a href="#" data-route="account">My Account</a></li>
-        <li><a href="#" data-route="help">Returns &amp; Refunds</a></li>
+        <li><a href="#" data-route="orders">Track order</a></li>
+        <li><a href="#" data-route="account">My account</a></li>
+        <li>USSD: <strong>*483*KCM#</strong></li>
+        <li>WhatsApp: <strong>0700 547 244</strong></li>
       </ul>
     </div>
     <div>
-      <h4>Our Branches</h4>
+      <h4>Our 8 branches</h4>
       <ul class="links">
-        <li>Eldoret — Uganda Road</li>
-        <li>Eldoret — Kapsoya</li>
-        <li>Nairobi — Kasarani</li>
-        <li>Kitale — Kenyatta Street</li>
+        <li>Kapsoit · Litein</li>
+        <li>Mogogosiek · Nandi Hills</li>
+        <li>Kapsabet · Mosoriot</li>
+        <li>Ainamoi</li>
+        <li>Eldoret — Serani Mall</li>
       </ul>
     </div>
     <div>
       <h4>Stay in the loop</h4>
-      <p class="muted">Get weekly deals straight to your inbox.</p>
-      <form class="newsletter" onsubmit="event.preventDefault();this.querySelector('button').textContent='✓ Subscribed';">
+      <p class="muted">Weekly deals to your inbox.</p>
+      <form class="newsletter" onsubmit="event.preventDefault();this.querySelector('button').textContent='✓ Asante!';">
         <input type="email" placeholder="you@example.com" required />
         <button class="btn btn--primary">Subscribe</button>
       </form>
     </div>
   </div>
   <div class="footer__legal container">
-    <span>© <span id="year"></span> Kipchimatt Supermarket Ltd. All rights reserved.</span>
-    <span>🇰🇪 Made in Kenya</span>
+    <span>© <span id="year"></span> Kipchimchim Group Ltd. All rights reserved.</span>
+    <span>🇰🇪 Kericho · Kenya</span>
   </div>
 </footer>
 
@@ -351,6 +510,16 @@
   <div class="modal__panel" role="dialog" aria-modal="true">
     <button class="modal__close" data-close aria-label="Close">×</button>
     <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- Voice listening overlay -->
+<div id="voice" class="voice" hidden>
+  <div class="voice__panel">
+    <div class="voice__pulse"><div></div><div></div><div></div></div>
+    <p>Sikiliza... <small>Sema kwa Kiswahili au English</small></p>
+    <p id="voiceHeard" class="voice__heard"></p>
+    <button class="btn btn--ghost" data-close-voice>Cancel</button>
   </div>
 </div>
 
