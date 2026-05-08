@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kipchimatt Online — Boardroom Deck</title>
+<style>
+  :root{
+    --red:#e62628; --red-d:#b0181c; --yellow:#ffd500; --yellow-d:#e6bd00;
+    --ink:#0f1420; --ink-2:#2a3140; --muted:#5b6472;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#000;color:var(--ink);overflow:hidden}
+  .deck{position:relative;height:100vh;width:100vw}
+  .slide{position:absolute;inset:0;display:none;padding:5vh 7vw;flex-direction:column;justify-content:center;animation:fade .35s ease-out}
+  .slide.is-active{display:flex}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+  /* Brand mark */
+  .brand{display:inline-flex;align-items:center;gap:14px;position:absolute;top:5vh;left:7vw}
+  .brand__mark{width:54px;height:46px;border-radius:50%;background:var(--yellow);color:var(--red);font-weight:900;font-size:1.5rem;display:grid;place-items:center;box-shadow:0 0 0 3px var(--red),0 2px 6px rgba(0,0,0,.2);font-family:Georgia,serif;font-style:italic}
+  .brand__text{display:flex;flex-direction:column;line-height:1}
+  .brand__text strong{font-size:1.05rem;letter-spacing:0;color:#fff}
+  .brand__text small{opacity:.85;font-size:.65rem;letter-spacing:.5px;margin-top:3px;color:#fff;font-style:italic}
+  .slide--light .brand__text strong,.slide--light .brand__text small{color:var(--ink)}
+
+  /* Slide chrome */
+  .slidenum{position:absolute;bottom:5vh;right:7vw;font-size:.85rem;color:rgba(255,255,255,.5);letter-spacing:.4px;font-variant-numeric:tabular-nums}
+  .slide--light .slidenum{color:var(--muted)}
+
+  /* Slide variants */
+  .slide--red    {background:linear-gradient(135deg,var(--red-d) 0%,var(--red) 100%);color:#fff}
+  .slide--yellow {background:linear-gradient(135deg,var(--yellow) 0%,var(--yellow-d) 100%);color:var(--ink)}
+  .slide--ink    {background:linear-gradient(135deg,var(--ink) 0%,var(--ink-2) 100%);color:#fff}
+  .slide--light  {background:#fff8e1;color:var(--ink)}
+
+  h1{font-size:5.5vw;margin:0 0 2vh;line-height:1;letter-spacing:-.02em;font-weight:900}
+  h2{font-size:3.4vw;margin:0 0 2vh;line-height:1.05;font-weight:900;letter-spacing:-.01em}
+  h3{font-size:2vw;margin:0 0 1vh;font-weight:800}
+  p{font-size:1.6vw;line-height:1.4;margin:0 0 1.5vh;max-width:80ch}
+  small,.small{font-size:1.1vw;opacity:.75;font-style:italic}
+  .lede{font-size:2vw;line-height:1.3;max-width:75ch;opacity:.95}
+  ul{padding-left:1.4em;font-size:1.6vw;line-height:1.5}
+  li{margin-bottom:.6vh}
+  strong.accent{color:var(--yellow)}
+  .slide--yellow strong.accent,.slide--light strong.accent{color:var(--red)}
+
+  /* Title slide */
+  .title-mark{font-size:14vw;line-height:.85;font-weight:900;letter-spacing:-.04em;font-family:Georgia,serif;font-style:italic}
+  .title-mark .ipchimatt{font-style:normal;font-family:inherit;font-weight:900;color:var(--yellow);letter-spacing:-.02em}
+  .slide--yellow .title-mark .ipchimatt{color:var(--ink)}
+  .title-tagline{font-family:Georgia,serif;font-style:italic;color:var(--yellow);font-size:2.2vw;margin-top:1vh}
+  .slide--yellow .title-tagline{color:var(--red)}
+
+  /* Big numbers slide */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:4vw;margin-top:3vh}
+  .stat strong{display:block;font-size:6vw;font-weight:900;line-height:1;color:var(--yellow);letter-spacing:-.02em}
+  .slide--yellow .stat strong,.slide--light .stat strong{color:var(--red)}
+  .stat span{display:block;font-size:1.3vw;margin-top:1vh;opacity:.95}
+
+  /* Feature grid */
+  .features{display:grid;grid-template-columns:repeat(3,1fr);gap:2vw;margin-top:3vh}
+  .feat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);padding:2.2vw;border-radius:14px}
+  .slide--light .feat,.slide--yellow .feat{background:#fff;border-color:#e6e8ea;box-shadow:0 6px 18px rgba(0,0,0,.06)}
+  .feat__emoji{font-size:3vw;line-height:1;margin-bottom:1vh}
+  .feat h3{font-size:1.4vw;margin-bottom:.6vh}
+  .feat p{font-size:1.05vw;margin:0;opacity:.9}
+
+  /* The ask slide */
+  .ask{display:grid;grid-template-columns:80px 1fr;gap:1.5vw 2vw;align-items:center;margin-top:3vh}
+  .ask__num{width:60px;height:60px;border-radius:50%;background:var(--yellow);color:var(--red);font-weight:900;font-size:1.8vw;display:grid;place-items:center;font-family:Georgia,serif;font-style:italic}
+  .slide--yellow .ask__num{background:var(--red);color:var(--yellow)}
+  .ask__what{font-size:1.6vw;line-height:1.3}
+  .ask__what strong{font-weight:900}
+
+  /* Closing slide */
+  .closing-question{font-size:6vw;font-weight:900;letter-spacing:-.02em;line-height:1}
+  .closing-tag{font-size:1.5vw;margin-top:3vh;font-style:italic;opacity:.85}
+
+  /* Speaker hint (bottom-left, only visible to presenter) */
+  .hint{position:absolute;bottom:5vh;left:7vw;font-size:.95vw;opacity:.5;font-style:italic;max-width:50ch}
+
+  /* Nav controls */
+  .nav{position:fixed;bottom:14px;right:14px;display:flex;gap:6px;z-index:10}
+  .nav button{background:rgba(0,0,0,.55);color:#fff;border:1px solid rgba(255,255,255,.2);padding:7px 12px;border-radius:6px;font-size:.85rem;cursor:pointer}
+  .nav button:hover{background:rgba(0,0,0,.8)}
+
+  /* Print: each slide on a page (for handout) */
+  @media print{
+    @page { size: A4 landscape; margin: 0; }
+    html,body{height:auto;overflow:visible;background:#fff}
+    .deck{height:auto}
+    .slide{display:flex !important;page-break-after:always;height:100vh;position:relative;animation:none}
+    .nav{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- 1. TITLE -->
+  <section class="slide is-active slide--red" data-i="1">
+    <span class="brand"><span class="brand__mark">K</span><span class="brand__text"><strong>Kipchimatt</strong><small>Enterprises Ltd · Your Reliable Partner</small></span></span>
+    <div class="title-mark">K<span class="ipchimatt">ipchimatt</span></div>
+    <div style="font-size:3vw;font-weight:900;margin-top:1vh">Online.</div>
+    <div class="title-tagline">Your Reliable Partner — now in your pocket.</div>
+    <p style="margin-top:4vh;font-size:1.4vw;opacity:.85">A boardroom briefing · Kipchimchim Group</p>
+    <span class="slidenum">01 / 08</span>
+    <span class="hint">Open at full screen. Smile. Make eye contact with one director before clicking next.</span>
+  </section>
+
+  <!-- 2. THE PROBLEM -->
+  <section class="slide slide--ink" data-i="2">
+    <span class="brand"><span class="brand__mark">K</span><span class="brand__text"><strong>Kipchimatt</strong><small>Enterprises Ltd · Your Reliable Partner</small></span></span>
+    <h2>Three things are happening<br/>in Kenyan retail right now.</h2>
+    <ul>
+      <li>Our customers are <strong class="accent">shopping by phone</strong>. Naivas, Carrefour, Quickmart all have apps. Glovo and Bolt push supermarket delivery hard. <strong class="accent">We are the only major North-Rift supermarket without one.</strong></li>
+      <li>When our customers <em>do</em> shop us online, they go through <strong class="accent">Glovo — who take 18-25%</strong> of every order. Our margin disappearing into Spain.</li>
+      <li>We have something they don't: <strong class="accent">25 years of trust</strong>, 8 stores, our own bakery, our own Mbogo Tea, our own Valley Sugar, our own water. We have <em>brand</em>. We just aren't putting it to work online.</li>
+    </ul>
+    <span class="slidenum">02 / 08</span>
+    <span class="hint">Read this slowly. Let "into Spain" land. Pause after.</span>
+  </section>
+
+  <!-- 3. THE SOLUTION -->
+  <section class="slide slide--light" data-i="3">
+    <span class="brand"><span class="brand__mark">K</span><span class="brand__text"><strong>Kipchimatt</strong><small>Enterprises Ltd · Your Reliable Partner</small></span></span>
+    <h2>Six things no other Kenyan<br/>supermarket app does.</h2>
+    <p class="lede">All built. All clickable. All on your screens right now.</p>
+    <div class="features">
+      <div class="feat"><div class="feat__emoji">👨‍👩‍👧</div><h3>Pamoja Cart</h3><p>One shared cart. Whole family. Different phones.</p></div>
+      <div class="feat"><div class="feat__emoji">🍳</div><h3>Mpishi</h3><p>Pick a recipe. We add every ingredient sized to your family.</p></div>
+      <div class="feat"><div class="feat__emoji">💰</div><h3>Bei Yangu</h3><p>"I have KSh 2,000." Smart basket auto-built to budget.</p></div>
+      <div class="feat"><div class="feat__emoji">✈️</div><h3>Tuma Nyumbani</h3><p>Diaspora sends shopping home. Voice note included.</p></div>
+      <div class="feat"><div class="feat__emoji">🐢</div><h3>Lipa Pole Pole</h3><p>3 M-Pesa instalments on items above KSh 5,000.</p></div>
+      <div class="feat"><div class="feat__emoji">🏪</div><h3>Mama Mboga Pickup</h3><p>Local kiosks become our last-mile partners.</p></div>
+    </div>
+    <span class="slidenum">03 / 08</span>
+    <span class="hint">After this, hand the laptop to the directors. Demo for 3 minutes.</span>
+  </section>
+
+  <!-- 4. DEMO PROMPT -->
+  <section class="slide slide--yellow" data-i="4">
+    <span class="brand"><span class="brand__mark">K</span><span class="brand__text"><strong>Kipchimatt</strong><small>Enterprises Ltd · Your Reliable Partner</small></span></span>
+    <h1 style="font-size:8vw">Let's open it.</h1>
+    <p class="lede" style="margin-top:2vh">Three minutes of clicks. Then we'll talk numbers.</p>
+    <div style="margin-top:5vh;display:grid;grid-template-columns:repeat(2,1fr);gap:1.4vw 3vw;font-size:1.4vw">
+      <div>① &nbsp; Spin-the-wheel welcome</div>
+      <div>② &nbsp; Pamoja Cart — add demo members</div>
+      <div>③ &nbsp; Mpishi — Pilau ya Nyama → Add 5 ingredients</div>
+      <div>④ &nbsp; Bei Yangu — slide budget to KSh 2,000</div>
+      <div>⑤ &nbsp; Voice search — "Tafuta unga ya Soko"</div>
+      <div>⑥ &nbsp; Bei Tracker — 30-day price chart</div>
+      <div>⑦ &nbsp; Tuma Nyumbani — voice note demo</div>
+      <div>⑧ &nbsp; Lipa Pole Pole — TV split into 3</div>
+    </div>
+    <span class="slidenum">04 / 08</span>
+    <span class="hint">Switch tab to the live URL. Don't return to slides for 3 minutes.</span>
+  </section>
+
+  <!-- 5. THE NUMBERS -->
+  <section class="slide slide--ink" data-i="5">
+    <span class="brand"><span class="brand__mark">K</span><span class="brand__text"><strong>Kipchimatt</strong><small>Enterprises Ltd · Your Reliable Partner</small></span></span>
+    <h2>The numbers, conservative.</h2>
+    <p class="lede">If just 1% of our 16,000 daily walk-ins migrate online in year one…</p>
+    <div class="stats">
+      <div class="stat"><strong>KSh 144M</strong><span>Year-1 online revenue</span></div>
+      <div class="stat"><strong>KSh 7-10M</strong><span>Year-1 net margin</span></div>
+      <div class="stat"><strong>6-9 months</strong><span>Payback on the pilot</span></div>
+    </div>
+    <p style="margin-top:5vh;font-size:1.3vw;opacity:.7">Excludes diaspora revenue from Tuma Nyumbani · BNPL volume from Lipa Pole Pole · Loyalty data we don't currently collect at all.</p>
+    <span class="slidenum">05 / 08</span>
+    <span class="hint">Slow down. Repeat the third stat. "Six. To. Nine. Months." Power phrase.</span>
+  </section>
+
+  <!-- 6. WHY US, WHY NOW -->
+  <section class="slide slide--light" data-i="6">
+    <span class="brand"><span class="brand__mark">K</span><span class="brand__text"><strong>Kipchimatt</strong><small>Enterprises Ltd · Your Reliable Partner</small></span></span>
+    <h2>Why us — and why now.</h2>
+    <ul style="font-size:1.7vw">
+      <li><strong>Owner-operated.</strong> Decide today, ship in 16 weeks. Naivas needs three committee meetings to pick a font.</li>
+      <li><strong>Concentrated network.</strong> 8 branches in our region. Same-day delivery from <em>here</em> beats Naivas-from-Westlands.</li>
+      <li><strong>House brands.</strong> Kipchimatt Bread, Mbogo Tea, Valley Sugar, Mbogo Water — surfaced first in our own app, not buried in Glovo's.</li>
+      <li><strong>Debt-free at 25 years.</strong> The board's appetite for the next chapter is real.</li>
+    </ul>
+    <p style="margin-top:4vh;font-size:1.5vw"><strong class="accent">Why now?</strong> &nbsp; Because the market matures with someone else's customers. Every quarter we wait, our acquisition cost rises.</p>
+    <span class="slidenum">06 / 08</span>
+    <span class="hint">Eye contact with the eldest director on the last line. They'll appreciate the frame.</span>
+  </section>
+
+  <!-- 7. THE ASK -->
+  <section class="slide slide--red" data-i="7">
+    <span class="brand"><span class="brand__mark">K</span><span class="brand__text"><strong>Kipchimatt</strong><small>Enterprises Ltd · Your Reliable Partner</small></span></span>
+    <h2>The ask.</h2>
+    <div class="ask">
+      <div class="ask__num">1</div>
+      <div class="ask__what"><strong>KSh 3.5 million</strong> ringfenced as a Phase 1 pilot. Gated. Killable at week 10.</div>
+      <div class="ask__num">2</div>
+      <div class="ask__what">Permission to launch at <strong>Eldoret Serani Mall</strong> and <strong>Litein</strong>.</div>
+      <div class="ask__num">3</div>
+      <div class="ask__what"><strong>Three director sponsors</strong> — 30 minutes every two weeks. Unblock decisions.</div>
+      <div class="ask__num">4</div>
+      <div class="ask__what">A <strong>next-meeting date</strong>: 14 days from today, signed contracts, kickoff plan in hand.</div>
+    </div>
+    <p style="margin-top:5vh;font-size:1.5vw;font-style:italic;opacity:.95">If we say yes today, the app is live for customers <strong class="accent">16 weeks from now</strong>.</p>
+    <span class="slidenum">07 / 08</span>
+    <span class="hint">Slow. Let each ask land. Don't rush to the close.</span>
+  </section>
+
+  <!-- 8. CLOSE -->
+  <section class="slide slide--yellow" data-i="8">
+    <span class="brand"><span class="brand__mark">K</span><span class="brand__text"><strong>Kipchimatt</strong><small>Enterprises Ltd · Your Reliable Partner</small></span></span>
+    <div class="closing-question">The downside is bounded.<br/>The upside is the next 25 years.</div>
+    <p class="closing-tag">— What questions do you have?</p>
+    <span class="slidenum">08 / 08</span>
+    <span class="hint">Stop talking. Don't fill the silence. Wait for them to speak.</span>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev" title="Previous (← / k)">‹ Prev</button>
+  <button id="next" title="Next (→ / j / Space)">Next ›</button>
+  <button id="full" title="Full screen (f)">⛶</button>
+</div>
+
+<script>
+(() => {
+  const slides = Array.from(document.querySelectorAll(".slide"));
+  let i = 0;
+  function show(n){
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, idx) => s.classList.toggle("is-active", idx === i));
+    history.replaceState(null, "", "#" + (i + 1));
+  }
+  document.getElementById("prev").addEventListener("click", () => show(i - 1));
+  document.getElementById("next").addEventListener("click", () => show(i + 1));
+  document.getElementById("full").addEventListener("click", () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  });
+  document.addEventListener("keydown", e => {
+    if (["ArrowRight","ArrowDown","PageDown"," ","j","l"].includes(e.key)) { e.preventDefault(); show(i+1); }
+    else if (["ArrowLeft","ArrowUp","PageUp","k","h"].includes(e.key)) { e.preventDefault(); show(i-1); }
+    else if (e.key === "f") document.getElementById("full").click();
+    else if (e.key === "Home") show(0);
+    else if (e.key === "End")  show(slides.length-1);
+    else if (/^\d$/.test(e.key)) show(parseInt(e.key, 10) - 1);
+  });
+  // Swipe (for tablets)
+  let sx = 0;
+  document.addEventListener("touchstart", e => sx = e.touches[0].clientX, {passive:true});
+  document.addEventListener("touchend",   e => {
+    const dx = (e.changedTouches[0].clientX - sx);
+    if (Math.abs(dx) > 50) show(i + (dx < 0 ? 1 : -1));
+  }, {passive:true});
+  const start = parseInt((location.hash||"#1").slice(1), 10);
+  if (!isNaN(start)) show(start - 1);
+})();
+</script>
+
+</body>
+</html>

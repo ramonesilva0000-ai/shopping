@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Kipchimatt Online — One-Page Leave-Behind</title>
+<style>
+  :root{ --red:#e62628; --red-d:#b0181c; --yellow:#ffd500; --yellow-d:#e6bd00; --ink:#0f1420; --muted:#5b6472; --line:#e6e8ea; }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;font-family:Helvetica,Arial,sans-serif;color:var(--ink);background:#f0f0f0}
+  .page{
+    width:210mm;min-height:297mm;margin:10mm auto;background:#fff;padding:14mm 14mm 12mm;
+    box-shadow:0 4px 20px rgba(0,0,0,.15);position:relative;overflow:hidden;
+  }
+  /* HEADER */
+  .head{display:flex;align-items:center;gap:14px;border-bottom:4px solid var(--red);padding-bottom:9px;margin-bottom:12px}
+  .mark{width:54px;height:46px;border-radius:50%;background:var(--yellow);color:var(--red);font-weight:900;font-size:1.5rem;display:grid;place-items:center;box-shadow:0 0 0 3px var(--red);font-family:Georgia,serif;font-style:italic;flex-shrink:0}
+  .head__txt{flex:1}
+  .head__txt h1{margin:0;font-size:18pt;font-weight:900;letter-spacing:-.02em}
+  .head__txt p{margin:2px 0 0;font-size:9pt;color:var(--muted);font-style:italic}
+  .head__tag{font-size:8pt;color:var(--red-d);font-weight:700;text-align:right;line-height:1.3}
+  .head__tag strong{display:block;font-size:11pt;color:var(--red)}
+
+  h2{font-size:11pt;margin:10px 0 5px;color:var(--red);font-weight:900;letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid var(--line);padding-bottom:3px}
+  p,li{font-size:9pt;line-height:1.4;margin:0 0 4px}
+
+  /* TWO-COLUMN BODY */
+  .body{display:grid;grid-template-columns:1.05fr 1fr;gap:14px}
+
+  /* THE ONE-LINER */
+  .pitch-line{
+    background:linear-gradient(135deg,var(--red),var(--red-d));color:#fff;padding:10px 14px;border-radius:8px;
+    font-size:10pt;line-height:1.4;font-weight:600;margin-bottom:10px;
+  }
+  .pitch-line strong{color:var(--yellow)}
+
+  /* THE THREE NUMBERS */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:6px 0 10px}
+  .stat{background:#fff8e1;border:1px solid var(--yellow);padding:6px 4px;border-radius:6px;text-align:center}
+  .stat strong{display:block;font-size:14pt;font-weight:900;color:var(--red);line-height:1}
+  .stat span{display:block;font-size:7.5pt;color:var(--ink);margin-top:2px}
+
+  /* SIX FEATURES */
+  .feats{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+  .feat{background:#fff8e1;border:1px solid var(--line);padding:5px 7px;border-radius:5px}
+  .feat__title{font-weight:800;font-size:9pt;color:var(--red);margin:0}
+  .feat p{font-size:8pt;margin:1px 0 0;color:var(--ink)}
+  .feat__title em{font-style:normal;font-size:10pt;margin-right:4px}
+
+  /* ASK */
+  .ask{background:#0f1420;color:#fff;padding:8px 12px;border-radius:6px;margin-top:6px}
+  .ask h3{margin:0 0 4px;color:var(--yellow);font-size:10pt;font-weight:900}
+  .ask ul{padding-left:14px;margin:0}
+  .ask li{font-size:8.5pt;margin-bottom:1px;color:#fff}
+  .ask strong{color:var(--yellow)}
+
+  /* TIMELINE */
+  .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:4px}
+  .tl{background:#fff8e1;border-left:3px solid var(--red);padding:4px 6px;border-radius:3px}
+  .tl strong{display:block;font-size:8pt;color:var(--red);font-weight:900}
+  .tl span{font-size:7.5pt;display:block;line-height:1.3}
+
+  /* WHY US */
+  .why{margin-top:4px}
+  .why li{padding-left:18px;position:relative;margin-bottom:3px}
+  .why li::before{content:"✓";position:absolute;left:0;top:0;color:var(--red);font-weight:900;font-size:10pt}
+
+  /* FOOTER */
+  .foot{position:absolute;bottom:8mm;left:14mm;right:14mm;display:flex;justify-content:space-between;font-size:7.5pt;color:var(--muted);border-top:1px solid var(--line);padding-top:5px}
+  .foot strong{color:var(--red)}
+
+  @page { size: A4; margin: 0; }
+  @media print{
+    body{background:#fff}
+    .page{margin:0;box-shadow:none;width:auto;min-height:auto}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="head">
+    <div class="mark">K</div>
+    <div class="head__txt">
+      <h1>Kipchimatt Online</h1>
+      <p>Your Reliable Partner — now in your pocket. A boardroom briefing.</p>
+    </div>
+    <div class="head__tag"><strong>The ask</strong>KSh 3.5M · 16 weeks · 2 branches<br/>3 director sponsors · 1 yes</div>
+  </div>
+
+  <!-- ONE-LINER -->
+  <div class="pitch-line">
+    Every month we delay, our customers form online shopping habits with <strong>Naivas, Quickmart, Glovo</strong>. Online baskets run <strong>30% larger</strong>. Glovo takes <strong>18-25%</strong> of every order they handle for us. We need our own door.
+  </div>
+
+  <div class="body">
+    <!-- LEFT COLUMN -->
+    <div>
+      <h2>The numbers, conservative</h2>
+      <div class="stats">
+        <div class="stat"><strong>KSh 3.5M</strong><span>Pilot investment (gated, killable wk 10)</span></div>
+        <div class="stat"><strong>KSh 144M</strong><span>Year-1 revenue target</span></div>
+        <div class="stat"><strong>6-9 mo</strong><span>Payback period</span></div>
+      </div>
+      <p style="font-size:8pt;color:var(--muted);font-style:italic">Assumptions: 1% of 16,000 daily walk-ins migrate online · KSh 2,500 average online basket · 5-7% net margin after delivery and payment fees. Excludes diaspora revenue from Tuma Nyumbani, BNPL volume from Lipa Pole Pole, and the loyalty data we don't currently collect at all.</p>
+
+      <h2>Why us, why now</h2>
+      <ul class="why">
+        <li><strong>Owner-operated.</strong> We decide today, ship in 16 weeks. Naivas needs three committees.</li>
+        <li><strong>Concentrated 8-branch network.</strong> Same-day delivery from <em>here</em> beats Naivas-from-Westlands.</li>
+        <li><strong>House brands</strong> (Kipchimatt Bread, Mbogo Tea, Valley Sugar, Mbogo Water) surface first in our app — never in Glovo's.</li>
+        <li><strong>Debt-free at 25 years.</strong> The board's appetite for the next chapter is real.</li>
+        <li><strong>The market matures with someone else's customers.</strong> Every quarter we wait, our acquisition cost rises.</li>
+      </ul>
+
+      <h2>The ask</h2>
+      <div class="ask">
+        <h3>What I need from this room today</h3>
+        <ul>
+          <li><strong>1.</strong> KSh 3.5M Phase 1 budget approved in principle</li>
+          <li><strong>2.</strong> Pilot branches confirmed: Eldoret Serani Mall + Litein</li>
+          <li><strong>3.</strong> 3 director sponsors named, 30 min every 2 weeks</li>
+          <li><strong>4.</strong> Branch manager intros made by end of week</li>
+          <li><strong>5.</strong> Next meeting date: 14 days from today</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div>
+      <h2>Six things no other Kenyan supermarket app does</h2>
+      <div class="feats">
+        <div class="feat"><p class="feat__title"><em>👨‍👩‍👧</em>Pamoja Cart</p><p>One shared cart. Whole family. Different phones. Bulk discount unlocks at 5 members.</p></div>
+        <div class="feat"><p class="feat__title"><em>🍳</em>Mpishi</p><p>Pick a Kenyan recipe. We auto-add every ingredient sized to the family.</p></div>
+        <div class="feat"><p class="feat__title"><em>💰</em>Bei Yangu</p><p>Tell us your weekly budget. Smart basket builds itself, max nutrition per shilling.</p></div>
+        <div class="feat"><p class="feat__title"><em>✈️</em>Tuma Nyumbani</p><p>Diaspora and Nairobi send shopping to relatives upcountry — with a voice note.</p></div>
+        <div class="feat"><p class="feat__title"><em>🐢</em>Lipa Pole Pole</p><p>3 M-Pesa instalments on items above KSh 5,000. 0% interest. 60-second approval.</p></div>
+        <div class="feat"><p class="feat__title"><em>🏪</em>Mama Mboga Pickup</p><p>Local kiosks become last-mile partners. Mama earns. Customer skips boda fees.</p></div>
+      </div>
+
+      <h2>16-week pilot timeline</h2>
+      <div class="timeline">
+        <div class="tl"><strong>Wk 1-2</strong><span>Designs locked. M-Pesa Daraja. Photography starts.</span></div>
+        <div class="tl"><strong>Wk 3-8</strong><span>Build all 6 differentiators + payment + inventory.</span></div>
+        <div class="tl"><strong>Wk 9-12</strong><span>Internal alpha. Mama mboga onboarding. Marketing prep.</span></div>
+        <div class="tl"><strong>Wk 13-16</strong><span>Soft launch Eldoret. Full launch Litein. Phase 2 review.</span></div>
+      </div>
+
+      <h2>If you ask one question, ask…</h2>
+      <p style="font-size:8.5pt"><strong>"What if it flops?"</strong> — Budget gates pay only on milestone. Week 10 kill-switch caps exposure at ~KSh 2.2M. Worst-case loss is recoverable in two months of bakery profit. The product photography, brand assets and customer database remain ours.</p>
+
+      <h2>Three reasons this is not just-another-app</h2>
+      <ul style="padding-left:14px">
+        <li><strong>Pamoja Cart is a moat.</strong> Once a chama uses it, switching cost is real.</li>
+        <li><strong>Tuma Nyumbani opens diaspora basket revenue.</strong> Kenyans send ~$4B/yr home.</li>
+        <li><strong>Mama Mboga partnership is PR gold + last-mile economics.</strong> Inverts "supermarkets vs mama mbogas" narrative.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span><strong>Kipchimatt Enterprises Ltd.</strong> · A Kipchimchim Group company · Kericho · Kenya</span>
+    <span>Live demo: <strong>[ Pages URL here ]</strong> · Full pitch document: <strong>PITCH.md</strong> in the repo</span>
+  </div>
+
+</div>
+
+</body>
+</html>
