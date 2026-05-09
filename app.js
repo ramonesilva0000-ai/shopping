@@ -213,14 +213,24 @@ function cartItems(){
 }
 function cartSubtotal(){ return cartItems().reduce((s,x)=> s + x.p.price*x.qty, 0); }
 function cartItemCount(){ return cartItems().reduce((s,x)=> s + x.qty, 0); }
-function addToCart(id, qty=1){
+function addToCart(id, qty=1, opts={}){
   const cur = state.cart[id];
   const curQty = typeof cur === "number" ? cur : (cur ? cur.qty : 0);
+  const wasSub = cartSubtotal();
   const by = state.pamoja ? (state.user?.name?.split(" ")[0] || "You") : null;
   state.cart[id] = by ? { qty: curQty + qty, by } : (curQty + qty);
   save(); refreshHeader();
   const p = findProduct(id);
-  toast(`✓ Added ${p.name.split(" - ")[0]} to cart`);
+  // Visual fanfare
+  if (!opts.silent) {
+    flyToCart(p, opts.fromEl);
+    bumpCart();
+    chaching();
+    openCartDrawer(p, qty);
+    // Crossed free-delivery threshold? Confetti.
+    const nowSub = cartSubtotal();
+    if (wasSub < 3000 && nowSub >= 3000) confetti();
+  }
 }
 function setQty(id, qty){
   if (qty <= 0) delete state.cart[id];
@@ -273,7 +283,7 @@ function bindProductCards(root){
     const id = card.dataset.id;
     card.addEventListener("click", e => {
       const a = e.target.closest("[data-action]")?.dataset.action;
-      if (a === "add")  { e.stopPropagation(); addToCart(id); }
+      if (a === "add")  { e.stopPropagation(); addToCart(id, 1, { fromEl: card.querySelector(".product__media") }); }
       else if (a === "wish") { e.stopPropagation(); toggleWish(id); }
       else if (a === "view") { navigate("product", { productId:id }); }
     });
@@ -1225,15 +1235,257 @@ function bindGlobal(){
   document.addEventListener("keydown", e => { if (e.key==="Escape") { closeModal(); closeVoice(); } });
 }
 
+// ===========================================================
+// INTERACTIVITY LAYER
+// ===========================================================
+
+// --- Sound (Web Audio synth, no asset dependencies) ---
+let soundOn = true;
+let audioCtx = null;
+function ensureAudio(){
+  if (!audioCtx) try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch {}
+  return audioCtx;
+}
+function tone(freq, dur=.08, type="sine", gain=.06){
+  if (!soundOn) return;
+  const ctx = ensureAudio(); if (!ctx) return;
+  const o = ctx.createOscillator(), g = ctx.createGain();
+  o.type = type; o.frequency.value = freq;
+  g.gain.value = gain;
+  o.connect(g); g.connect(ctx.destination);
+  o.start();
+  g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + dur);
+  o.stop(ctx.currentTime + dur);
+}
+function chaching(){ tone(880,.06,"triangle",.05); setTimeout(()=>tone(1320,.08,"triangle",.05), 70); }
+function ding(){ tone(660,.12,"sine",.04); }
+function pop(){ tone(440,.05,"square",.04); }
+function whoosh(){ if(!soundOn) return; const ctx = ensureAudio(); if (!ctx) return;
+  const o = ctx.createOscillator(), g = ctx.createGain();
+  o.type = "sine"; o.frequency.setValueAtTime(220, ctx.currentTime);
+  o.frequency.exponentialRampToValueAtTime(660, ctx.currentTime+.18);
+  g.gain.value = .03; o.connect(g); g.connect(ctx.destination);
+  o.start(); g.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime+.2); o.stop(ctx.currentTime+.2);
+}
+
+// --- Fly-to-cart animation ---
+function flyToCart(p, fromEl){
+  const cart = $(".iconbtn--cart");
+  if (!cart) return;
+  const start = (fromEl || document.body).getBoundingClientRect();
+  const end   = cart.getBoundingClientRect();
+  const ghost = document.createElement("div");
+  ghost.className = "fly";
+  ghost.textContent = p.emoji;
+  ghost.style.left = (start.left + start.width/2 - 20) + "px";
+  ghost.style.top  = (start.top  + start.height/2 - 20) + "px";
+  document.body.appendChild(ghost);
+  // Force layout, then animate to cart
+  requestAnimationFrame(() => {
+    const dx = (end.left + end.width/2)  - (start.left + start.width/2);
+    const dy = (end.top  + end.height/2) - (start.top  + start.height/2);
+    ghost.style.transform = `translate(${dx}px,${dy}px) scale(.3) rotate(360deg)`;
+    ghost.style.opacity = "0";
+  });
+  setTimeout(() => ghost.remove(), 900);
+}
+
+function bumpCart(){
+  const c = $(".iconbtn--cart"); if (!c) return;
+  c.classList.remove("bump"); void c.offsetWidth; c.classList.add("bump");
+}
+
+// --- Confetti (red + yellow + white) ---
+function confetti(){
+  const wrap = document.createElement("div");
+  wrap.className = "confetti";
+  const colors = ["#e62628","#ffd500","#ffffff","#b0181c","#e6bd00"];
+  for (let i = 0; i < 60; i++) {
+    const s = document.createElement("span");
+    s.style.left = (Math.random() * 100) + "%";
+    s.style.background = colors[Math.floor(Math.random()*colors.length)];
+    s.style.animationDelay = (Math.random() * .4) + "s";
+    s.style.animationDuration = (1.8 + Math.random() * 1.2) + "s";
+    s.style.transform = `rotate(${Math.random()*360}deg)`;
+    wrap.appendChild(s);
+  }
+  document.body.appendChild(wrap);
+  ding();
+  toast("🎉 Free delivery unlocked!");
+  setTimeout(() => wrap.remove(), 3000);
+}
+
+// --- Cart drawer (slides in on add) ---
+let cdrawerTimer = null;
+function openCartDrawer(latestProduct, qty){
+  const dr = $("#cartDrawer"), ov = $("#cartDrawerOverlay");
+  const items = cartItems();
+  const sub = cartSubtotal();
+  const remaining = Math.max(0, 3000 - sub);
+  const pct = Math.min(100, (sub / 3000) * 100);
+  $("#cartDrawerBody").innerHTML = items.slice(0,5).map(({p,qty}) => `
+    <div class="cdrawer__line">
+      <div class="cdrawer__emoji">${p.emoji}</div>
+      <div style="flex:1">
+        <div class="cdrawer__name">${p.name.split(" - ")[0]}</div>
+        <div class="cdrawer__price">${fmt(p.price)} × ${qty}</div>
+      </div>
+      <div style="font-weight:800;color:var(--red)">${fmt(p.price * qty)}</div>
+    </div>`).join("");
+  $("#cdTotal").textContent = fmt(sub);
+  const fill = $("#cdProgressFill"); fill.style.width = pct + "%";
+  if (remaining <= 0) {
+    fill.classList.add("is-met");
+    $("#cdProgressText").innerHTML = `🎉 <strong style="color:#1aab4a">Free delivery unlocked!</strong>`;
+  } else {
+    fill.classList.remove("is-met");
+    $("#cdProgressText").innerHTML = `Add <strong>${fmt(remaining)}</strong> more for free delivery 🚚`;
+  }
+  dr.classList.add("is-open"); ov.classList.add("is-open");
+  dr.setAttribute("aria-hidden","false");
+  clearTimeout(cdrawerTimer);
+  cdrawerTimer = setTimeout(closeCartDrawer, 4500);
+}
+function closeCartDrawer(){
+  $("#cartDrawer")?.classList.remove("is-open");
+  $("#cartDrawerOverlay")?.classList.remove("is-open");
+  $("#cartDrawer")?.setAttribute("aria-hidden","true");
+  clearTimeout(cdrawerTimer);
+}
+
+// --- Pamoja activity simulator ---
+const PAMOJA_NAMES = [
+  ["Mama Wanjiku","MW"], ["Baba Kibet","BK"], ["Auntie Cherono","AC"], ["Cousin Brian","CB"],
+  ["Sister Faith","SF"], ["Uncle Mutai","UM"], ["Mum","M"], ["Cousin Mercy","CM"]
+];
+const PAMOJA_ITEMS = [
+  ["🥛","Brookside Milk"],["🥚","Eggs (tray of 30)"],["🍞","Kipchimatt Bread"],["🍵","Mbogo Tea"],
+  ["🌾","Soko Maize Flour"],["🧈","Blue Band"],["🥬","Sukuma Wiki"],["🍅","Tomatoes"],
+  ["🥩","Beef 1kg"],["🟫","Valley Sugar"],["💧","Mbogo Water"],["🧴","Nivea Lotion"]
+];
+let pamojaInterval = null;
+function startPamojaSimulator(){
+  clearInterval(pamojaInterval);
+  pamojaInterval = setInterval(() => {
+    if (!state.pamoja) return;
+    if (Math.random() > 0.55) return;
+    const m = PAMOJA_NAMES[Math.floor(Math.random()*PAMOJA_NAMES.length)];
+    const it = PAMOJA_ITEMS[Math.floor(Math.random()*PAMOJA_ITEMS.length)];
+    showPamojaToast(m[0], m[1], it[0], it[1]);
+  }, 7000);
+}
+function showPamojaToast(name, initials, emoji, item){
+  const t = document.createElement("div");
+  t.className = "pamoja-toast";
+  t.innerHTML = `<div class="pamoja-toast__avatar">${initials}</div>
+    <div><span class="pamoja-toast__name">${name}</span> just added<br/><strong>${emoji} ${item}</strong></div>`;
+  document.body.appendChild(t);
+  pop();
+  setTimeout(() => { t.classList.add("out"); setTimeout(() => t.remove(), 350); }, 4200);
+}
+
+// --- Just-bought ticker (rolling country-wide activity) ---
+const JB_NAMES   = ["Wanjiku","Kibet","Otieno","Cherono","Mutai","Auma","Kipruto","Njeri","Mwangi","Chebet","Kemboi","Akinyi","Rotich"];
+const JB_TOWNS   = ["Eldoret","Litein","Kapsabet","Kapsoit","Nandi Hills","Mosoriot","Ainamoi","Mogogosiek"];
+const JB_ITEMS   = [
+  "6 items including Kipchimatt Bread","Pilau ingredients via Mpishi","a TV on Lipa Pole Pole",
+  "the Bei Yangu KSh 1,500 basket","20 items via Pamoja Cart","Mbogo Tea + Valley Sugar combo",
+  "Sukuma Wiki at the Bei Bomba price","weekly shopping for Tuma Nyumbani"
+];
+let jbInterval = null;
+function startJustBoughtTicker(){
+  const bar = $("#justBought"), msg = $("#justBoughtMsg");
+  if (!bar || !msg) return;
+  bar.hidden = false;
+  const tick = () => {
+    const name = JB_NAMES[Math.floor(Math.random()*JB_NAMES.length)];
+    const town = JB_TOWNS[Math.floor(Math.random()*JB_TOWNS.length)];
+    const item = JB_ITEMS[Math.floor(Math.random()*JB_ITEMS.length)];
+    msg.parentElement.style.animation = "none"; void msg.parentElement.offsetWidth;
+    msg.parentElement.style.animation = "";
+    msg.innerHTML = `<strong>${name}</strong> from <strong>${town}</strong> just bought ${item}`;
+    msg.parentElement.parentElement.classList.add("flash");
+    setTimeout(() => msg.parentElement.parentElement.classList.remove("flash"), 600);
+  };
+  tick();
+  clearInterval(jbInterval);
+  jbInterval = setInterval(tick, 5500);
+}
+
+// --- Animated number bumps ---
+function bumpEl(el){
+  if (!el) return;
+  el.classList.remove("count-bump"); void el.offsetWidth; el.classList.add("count-bump");
+}
+function patchRefreshHeader(){
+  const orig = refreshHeader;
+  let lastBadge = -1, lastTotal = -1, lastWish = -1;
+  refreshHeader = function(){
+    orig();
+    const b = parseInt($("#cartBadge").textContent)||0;
+    const t = parseInt($("#cartTotalMini").textContent.replace(/,/g,""))||0;
+    const w = parseInt($("#wishlistCount").textContent)||0;
+    if (lastBadge !== -1 && b !== lastBadge) bumpEl($("#cartBadge"));
+    if (lastTotal !== -1 && t !== lastTotal) bumpEl($("#cartTotalMini"));
+    if (lastWish  !== -1 && w !== lastWish ) bumpEl($("#wishlistCount"));
+    lastBadge = b; lastTotal = t; lastWish = w;
+  };
+}
+
+// --- Live viewers on PDP (simulated) ---
+function injectLiveViewers(){
+  const t = $(".pdp__title"); if (!t || $("#liveViewers")) return;
+  const n = 4 + Math.floor(Math.random() * 18);
+  const initials = ["JW","MK","CR","AO","DK","FN","SC","BM"];
+  const pile = initials.slice(0, 3).map(i => `<span>${i}</span>`).join("");
+  const v = document.createElement("div");
+  v.id = "liveViewers";
+  v.className = "viewers";
+  v.innerHTML = `<span class="viewers__dot"></span><div class="viewers__pile">${pile}</div><span><strong>${n}</strong> Kenyans viewing this now</span>`;
+  t.insertAdjacentElement("afterend", v);
+}
+
+// Patch renderProduct to inject live viewers
+const __renderProduct__ = renderProduct;
+renderProduct = function(id){
+  __renderProduct__(id);
+  setTimeout(injectLiveViewers, 30);
+};
+
+// --- Mute toggle ---
+function bindMute(){
+  const b = $("#muteBtn"); if (!b) return;
+  b.addEventListener("click", () => {
+    soundOn = !soundOn;
+    b.textContent = soundOn ? "🔊" : "🔇";
+    toast(soundOn ? "Sound on" : "Sound off");
+  });
+}
+
+// --- Cart drawer close handlers ---
+function bindCartDrawer(){
+  document.addEventListener("click", e => {
+    if (e.target.closest("[data-drawer-close]") || e.target === $("#cartDrawerOverlay")) closeCartDrawer();
+    // Any navigation also dismisses the drawer
+    if (e.target.closest("[data-route],[data-cat]") && e.target.closest("#cartDrawer")) closeCartDrawer();
+  });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeCartDrawer(); });
+}
+
 // ---------- INIT ----------
 function init(){
   $("#year").textContent = new Date().getFullYear();
   bindGlobal();
+  patchRefreshHeader();
+  bindMute();
+  bindCartDrawer();
   renderHome();
   refreshHeader();
   navigate("home");
   startCountdown();
   startLiveShoppers();
+  startJustBoughtTicker();
+  startPamojaSimulator();
   // First-time spin (defer slightly so it doesn't block paint)
   if (!state.spinSeen) setTimeout(showSpin, 1200);
 }

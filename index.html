@@ -80,6 +80,14 @@
   </nav>
 </header>
 
+<!-- Just-bought ticker (live activity bar) -->
+<div class="justbought" id="justBought" hidden>
+  <div class="container justbought__row">
+    <span class="dot"></span>
+    <span id="justBoughtMsg">—</span>
+  </div>
+</div>
+
 <!-- ============ MAIN ============ -->
 <main id="main" class="container">
 
@@ -512,6 +520,30 @@
     <div id="modalBody"></div>
   </div>
 </div>
+
+<!-- Mute toggle for sound effects -->
+<button class="mute" id="muteBtn" aria-label="Toggle sound effects" title="Sound on/off">🔊</button>
+
+<!-- Cart drawer (slides in when adding) -->
+<div id="cartDrawerOverlay" class="cdrawer__overlay"></div>
+<aside id="cartDrawer" class="cdrawer" aria-hidden="true">
+  <div class="cdrawer__head">
+    <h3>🛒 Just added</h3>
+    <button class="cdrawer__close" data-drawer-close aria-label="Close">×</button>
+  </div>
+  <div class="cdrawer__body" id="cartDrawerBody"></div>
+  <div class="cdrawer__foot">
+    <div class="cdrawer__progress">
+      <div class="cdrawer__progress-text" id="cdProgressText">—</div>
+      <div class="cdrawer__progress-bar"><div class="cdrawer__progress-fill" id="cdProgressFill" style="width:0%"></div></div>
+    </div>
+    <div class="cdrawer__total"><span>Subtotal</span><strong id="cdTotal">KSh 0</strong></div>
+    <div class="cdrawer__cta">
+      <button class="btn btn--ghost" data-drawer-close>Continue</button>
+      <button class="btn btn--gold" data-route="cart">View cart →</button>
+    </div>
+  </div>
+</aside>
 
 <!-- Voice listening overlay -->
 <div id="voice" class="voice" hidden>
