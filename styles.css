@@ -655,3 +655,9 @@ ul{margin:0;padding:0;list-style:none}
   .pamoja-toast{top:80px;right:8px;max-width:calc(100vw - 16px)}
   .justbought{font-size:.78rem}
 }
+
+/* Cart top bar with clear-all */
+.cart__topbar{display:flex;justify-content:space-between;align-items:center;padding:12px 14px 10px;border-bottom:1px solid var(--line);font-size:.95rem}
+.cart__topbar strong{color:var(--red);font-weight:800}
+.cart__topbar .btn{padding:6px 12px;color:var(--red);border-color:var(--red)}
+.cart__topbar .btn:hover{background:#fce4e4;border-color:var(--red-d);color:var(--red-d)}

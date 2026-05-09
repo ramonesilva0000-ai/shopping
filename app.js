@@ -469,6 +469,10 @@ function renderCart(){
   v.innerHTML = `
     ${pamojaBanner}
     <div class="cart__lines">
+      <div class="cart__topbar">
+        <span><strong>${cartItemCount()}</strong> ${cartItemCount()===1?"item":"items"} in your cart</span>
+        <button class="btn btn--ghost btn--sm" id="clearCart">🗑 Clear cart</button>
+      </div>
       ${items.map(({p,qty,by}) => `
         <div class="cart-line" data-id="${p.id}">
           <div class="cart-line__media">${p.emoji}${by?`<span class="cart-line__avatar">${initials(by)}</span>`:""}</div>
@@ -513,6 +517,23 @@ function renderCart(){
   });
   if (state.pamoja) $("#leavePamoja").addEventListener("click", () => {
     state.pamoja = null; save(); refreshHeader(); renderCart(); toast("Left Pamoja Cart");
+  });
+  $("#clearCart")?.addEventListener("click", () => {
+    if (!cartItemCount()) return;
+    openModal(`<div style="text-align:center">
+      <div style="font-size:3rem">🗑</div>
+      <h2>Clear your whole cart?</h2>
+      <p class="muted">All ${cartItemCount()} items will be removed. You can't undo this.</p>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
+        <button class="btn btn--ghost" data-close>Cancel</button>
+        <button class="btn btn--danger" id="confirmClear">Yes, clear cart</button>
+      </div>
+    </div>`);
+    $("#confirmClear").addEventListener("click", () => {
+      state.cart = {}; state.promo = null;
+      save(); refreshHeader(); closeModal(); renderCart();
+      toast("✓ Cart cleared");
+    });
   });
 }
 const PROMOS = { KIPCHIM10:{type:"pct",value:10}, FRESH50:{type:"flat",value:50}, MAMA200:{type:"flat",value:200} };
