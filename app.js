@@ -40,74 +40,74 @@ const CATEGORIES = [
 // "house" = Kipchimchim house brand (Kipchimatt Bread, Mbogo Tea/Water, Valley Sugar, Keben Tea)
 const PRODUCTS = [
   // Fresh
-  { id:"p1",  name:"Sukuma Wiki - 1 bunch",        price:30,  was:40,  cat:"fresh", emoji:"🥬", unit:"per bunch", rating:4.7, deal:true, img:"https://loremflickr.com/400/400/kale,sukuma?lock=1" },
-  { id:"p2",  name:"Tomatoes - 1 kg",               price:120, was:150, cat:"fresh", emoji:"🍅", unit:"per kg",    rating:4.6, deal:true, img:"https://loremflickr.com/400/400/tomato,red?lock=2" },
-  { id:"p3",  name:"Sweet Bananas - 1 kg",          price:90,  was:null,cat:"fresh", emoji:"🍌", unit:"per kg",    rating:4.5, img:"https://loremflickr.com/400/400/banana,bunch?lock=3" },
-  { id:"p4",  name:"Avocado (Hass) - 4 pcs",        price:200, was:240, cat:"fresh", emoji:"🥑", unit:"pack of 4", rating:4.8, deal:true, img:"https://loremflickr.com/400/400/avocado,hass?lock=4" },
-  { id:"p5",  name:"Red Onions - 1 kg",             price:110, was:null,cat:"fresh", emoji:"🧅", unit:"per kg",    rating:4.4, img:"https://loremflickr.com/400/400/onion,red?lock=5" },
-  { id:"p6",  name:"Mangoes - 6 pcs",               price:350, was:null,cat:"fresh", emoji:"🥭", unit:"pack of 6", rating:4.9, img:"https://loremflickr.com/400/400/mango,ripe?lock=6" },
-  { id:"p7",  name:"Carrots - 1 kg",                price:80,  was:null,cat:"fresh", emoji:"🥕", unit:"per kg",    rating:4.5, img:"https://loremflickr.com/400/400/carrot,fresh?lock=7" },
-  { id:"p8",  name:"Dhania (Coriander) bunch",      price:20,  was:null,cat:"fresh", emoji:"🌿", unit:"per bunch", rating:4.5, img:"https://loremflickr.com/400/400/coriander,herb?lock=8" },
+  { id:"p1",  name:"Sukuma Wiki - 1 bunch",        price:30,  was:40,  cat:"fresh", emoji:"🥬", unit:"per bunch", rating:4.7, deal:true },
+  { id:"p2",  name:"Tomatoes - 1 kg",               price:120, was:150, cat:"fresh", emoji:"🍅", unit:"per kg",    rating:4.6, deal:true },
+  { id:"p3",  name:"Sweet Bananas - 1 kg",          price:90,  was:null,cat:"fresh", emoji:"🍌", unit:"per kg",    rating:4.5 },
+  { id:"p4",  name:"Avocado (Hass) - 4 pcs",        price:200, was:240, cat:"fresh", emoji:"🥑", unit:"pack of 4", rating:4.8, deal:true },
+  { id:"p5",  name:"Red Onions - 1 kg",             price:110, was:null,cat:"fresh", emoji:"🧅", unit:"per kg",    rating:4.4 },
+  { id:"p6",  name:"Mangoes - 6 pcs",               price:350, was:null,cat:"fresh", emoji:"🥭", unit:"pack of 6", rating:4.9 },
+  { id:"p7",  name:"Carrots - 1 kg",                price:80,  was:null,cat:"fresh", emoji:"🥕", unit:"per kg",    rating:4.5 },
+  { id:"p8",  name:"Dhania (Coriander) bunch",      price:20,  was:null,cat:"fresh", emoji:"🌿", unit:"per bunch", rating:4.5 },
   // Bakery
-  { id:"p10", name:"Kipchimatt Bread White 400g",   price:65,  was:null,cat:"bakery",emoji:"🍞", unit:"400 g",     rating:4.8, house:true, img:"https://loremflickr.com/400/400/bread,white,loaf?lock=10" },
-  { id:"p11", name:"Kipchimatt Bread Brown 600g",   price:90,  was:null,cat:"bakery",emoji:"🥖", unit:"600 g",     rating:4.7, house:true, img:"https://loremflickr.com/400/400/bread,brown,wholegrain?lock=11" },
-  { id:"p12", name:"Mandazi - pack of 6",           price:120, was:150, cat:"bakery",emoji:"🥐", unit:"pack of 6", rating:4.8, deal:true, img:"https://loremflickr.com/400/400/doughnut,pastry?lock=12" },
-  { id:"p13", name:"Birthday Cake (Vanilla) 1kg",   price:1500,was:null,cat:"bakery",emoji:"🎂", unit:"1 kg",      rating:4.9, img:"https://loremflickr.com/400/400/cake,vanilla?lock=13" },
+  { id:"p10", name:"Kipchimatt Bread White 400g",   price:65,  was:null,cat:"bakery",emoji:"🍞", unit:"400 g",     rating:4.8, house:true },
+  { id:"p11", name:"Kipchimatt Bread Brown 600g",   price:90,  was:null,cat:"bakery",emoji:"🥖", unit:"600 g",     rating:4.7, house:true },
+  { id:"p12", name:"Mandazi - pack of 6",           price:120, was:150, cat:"bakery",emoji:"🥐", unit:"pack of 6", rating:4.8, deal:true },
+  { id:"p13", name:"Birthday Cake (Vanilla) 1kg",   price:1500,was:null,cat:"bakery",emoji:"🎂", unit:"1 kg",      rating:4.9 },
   // Dairy
-  { id:"p20", name:"Brookside Fresh Milk 500ml",    price:60,  was:null,cat:"dairy", emoji:"🥛", unit:"500 ml",    rating:4.7, img:"https://loremflickr.com/400/400/milk,carton?lock=20" },
-  { id:"p21", name:"KCC Mala 500ml",                price:70,  was:null,cat:"dairy", emoji:"🥛", unit:"500 ml",    rating:4.6, img:"https://loremflickr.com/400/400/yogurt,mala?lock=21" },
-  { id:"p22", name:"Eggs - tray of 30",             price:480, was:540, cat:"dairy", emoji:"🥚", unit:"tray of 30",rating:4.8, deal:true, img:"https://loremflickr.com/400/400/eggs,tray?lock=22" },
-  { id:"p23", name:"Cheddar Cheese 250g",           price:380, was:null,cat:"dairy", emoji:"🧀", unit:"250 g",     rating:4.5, img:"https://loremflickr.com/400/400/cheese,cheddar?lock=23" },
-  { id:"p24", name:"Blue Band 500g",                price:320, was:null,cat:"dairy", emoji:"🧈", unit:"500 g",     rating:4.6, img:"https://loremflickr.com/400/400/butter,block?lock=24" },
+  { id:"p20", name:"Brookside Fresh Milk 500ml",    price:60,  was:null,cat:"dairy", emoji:"🥛", unit:"500 ml",    rating:4.7 },
+  { id:"p21", name:"KCC Mala 500ml",                price:70,  was:null,cat:"dairy", emoji:"🥛", unit:"500 ml",    rating:4.6 },
+  { id:"p22", name:"Eggs - tray of 30",             price:480, was:540, cat:"dairy", emoji:"🥚", unit:"tray of 30",rating:4.8, deal:true },
+  { id:"p23", name:"Cheddar Cheese 250g",           price:380, was:null,cat:"dairy", emoji:"🧀", unit:"250 g",     rating:4.5 },
+  { id:"p24", name:"Blue Band 500g",                price:320, was:null,cat:"dairy", emoji:"🧈", unit:"500 g",     rating:4.6 },
   // Butchery
-  { id:"p30", name:"Beef (with bone) - 1 kg",       price:650, was:null,cat:"butchery",emoji:"🥩", unit:"per kg",   rating:4.6, img:"https://loremflickr.com/400/400/beef,raw,steak?lock=30" },
-  { id:"p31", name:"Goat Meat - 1 kg",              price:750, was:null,cat:"butchery",emoji:"🍖", unit:"per kg",   rating:4.7, img:"https://loremflickr.com/400/400/goat,meat?lock=31" },
-  { id:"p32", name:"Whole Chicken - 1.2 kg",        price:750, was:850, cat:"butchery",emoji:"🍗", unit:"each",     rating:4.8, deal:true, img:"https://loremflickr.com/400/400/chicken,whole,raw?lock=32" },
-  { id:"p33", name:"Beef Sausages 500g",            price:380, was:null,cat:"butchery",emoji:"🌭", unit:"500 g",    rating:4.5, img:"https://loremflickr.com/400/400/sausage,beef?lock=33" },
+  { id:"p30", name:"Beef (with bone) - 1 kg",       price:650, was:null,cat:"butchery",emoji:"🥩", unit:"per kg",   rating:4.6 },
+  { id:"p31", name:"Goat Meat - 1 kg",              price:750, was:null,cat:"butchery",emoji:"🍖", unit:"per kg",   rating:4.7 },
+  { id:"p32", name:"Whole Chicken - 1.2 kg",        price:750, was:850, cat:"butchery",emoji:"🍗", unit:"each",     rating:4.8, deal:true },
+  { id:"p33", name:"Beef Sausages 500g",            price:380, was:null,cat:"butchery",emoji:"🌭", unit:"500 g",    rating:4.5 },
   // Pantry  (house brands prominently)
-  { id:"p40", name:"Soko Maize Flour 2kg",          price:195, was:220, cat:"pantry",emoji:"🌾", unit:"2 kg",      rating:4.7, deal:true, img:"https://loremflickr.com/400/400/flour,maize,bag?lock=40" },
-  { id:"p41", name:"Pembe Wheat Flour 2kg",         price:230, was:null,cat:"pantry",emoji:"🌾", unit:"2 kg",      rating:4.5, img:"https://loremflickr.com/400/400/flour,wheat,bag?lock=41" },
-  { id:"p42", name:"Mwea Pishori Rice 2kg",         price:480, was:540, cat:"pantry",emoji:"🍚", unit:"2 kg",      rating:4.9, deal:true, img:"https://loremflickr.com/400/400/rice,grain,bag?lock=42" },
-  { id:"p43", name:"Valley Sugar 2kg",              price:320, was:360, cat:"pantry",emoji:"🟫", unit:"2 kg",      rating:4.8, deal:true, house:true, img:"https://loremflickr.com/400/400/sugar,white,bag?lock=43" },
-  { id:"p44", name:"Salt 1kg",                      price:45,  was:null,cat:"pantry",emoji:"🧂", unit:"1 kg",      rating:4.5, img:"https://loremflickr.com/400/400/salt,table?lock=44" },
-  { id:"p45", name:"Cooking Oil (Rina) 3L",         price:1100,was:1300,cat:"pantry",emoji:"🛢️",unit:"3 L",        rating:4.8, deal:true, img:"https://loremflickr.com/400/400/oil,cooking,bottle?lock=45" },
-  { id:"p46", name:"Mbogo Tea Leaves 500g",         price:280, was:320, cat:"pantry",emoji:"🍵", unit:"500 g",     rating:4.8, deal:true, house:true, img:"https://loremflickr.com/400/400/spice,seasoning?lock=46" },
-  { id:"p47", name:"Keben Tea Leaves 250g",         price:160, was:null,cat:"pantry",emoji:"🍵", unit:"250 g",     rating:4.7, house:true, img:"https://loremflickr.com/400/400/tea,leaves,kenyan?lock=47" },
-  { id:"p48", name:"Royco Mchuzi Mix 200g",         price:180, was:null,cat:"pantry",emoji:"🥫", unit:"200 g",     rating:4.5, img:"https://loremflickr.com/400/400/spice,seasoning?lock=48" },
+  { id:"p40", name:"Soko Maize Flour 2kg",          price:195, was:220, cat:"pantry",emoji:"🌾", unit:"2 kg",      rating:4.7, deal:true },
+  { id:"p41", name:"Pembe Wheat Flour 2kg",         price:230, was:null,cat:"pantry",emoji:"🌾", unit:"2 kg",      rating:4.5 },
+  { id:"p42", name:"Mwea Pishori Rice 2kg",         price:480, was:540, cat:"pantry",emoji:"🍚", unit:"2 kg",      rating:4.9, deal:true },
+  { id:"p43", name:"Valley Sugar 2kg",              price:320, was:360, cat:"pantry",emoji:"🟫", unit:"2 kg",      rating:4.8, deal:true, house:true },
+  { id:"p44", name:"Salt 1kg",                      price:45,  was:null,cat:"pantry",emoji:"🧂", unit:"1 kg",      rating:4.5 },
+  { id:"p45", name:"Cooking Oil (Rina) 3L",         price:1100,was:1300,cat:"pantry",emoji:"🛢️",unit:"3 L",        rating:4.8, deal:true },
+  { id:"p46", name:"Mbogo Tea Leaves 500g",         price:280, was:320, cat:"pantry",emoji:"🍵", unit:"500 g",     rating:4.8, deal:true, house:true },
+  { id:"p47", name:"Keben Tea Leaves 250g",         price:160, was:null,cat:"pantry",emoji:"🍵", unit:"250 g",     rating:4.7, house:true },
+  { id:"p48", name:"Royco Mchuzi Mix 200g",         price:180, was:null,cat:"pantry",emoji:"🥫", unit:"200 g",     rating:4.5 },
   // Beverages
-  { id:"p50", name:"Coca-Cola 2L",                  price:220, was:null,cat:"beverages",emoji:"🥤",unit:"2 L",     rating:4.6, img:"https://loremflickr.com/400/400/cola,bottle?lock=50" },
-  { id:"p51", name:"Mbogo Water 500ml × 12",        price:240, was:300, cat:"beverages",emoji:"💧",unit:"12-pack", rating:4.7, deal:true, house:true, img:"https://loremflickr.com/400/400/water,bottle,pack?lock=51" },
-  { id:"p52", name:"Minute Maid Mango 1L",          price:180, was:null,cat:"beverages",emoji:"🧃",unit:"1 L",     rating:4.5, img:"https://loremflickr.com/400/400/juice,mango,bottle?lock=52" },
-  { id:"p53", name:"Tusker Lager 6 × 500ml",        price:1500,was:1700,cat:"beverages",emoji:"🍺",unit:"6-pack",  rating:4.7, deal:true, img:"https://loremflickr.com/400/400/beer,bottle,pack?lock=53" },
+  { id:"p50", name:"Coca-Cola 2L",                  price:220, was:null,cat:"beverages",emoji:"🥤",unit:"2 L",     rating:4.6 },
+  { id:"p51", name:"Mbogo Water 500ml × 12",        price:240, was:300, cat:"beverages",emoji:"💧",unit:"12-pack", rating:4.7, deal:true, house:true },
+  { id:"p52", name:"Minute Maid Mango 1L",          price:180, was:null,cat:"beverages",emoji:"🧃",unit:"1 L",     rating:4.5 },
+  { id:"p53", name:"Tusker Lager 6 × 500ml",        price:1500,was:1700,cat:"beverages",emoji:"🍺",unit:"6-pack",  rating:4.7, deal:true },
   // Household
-  { id:"p60", name:"Omo Detergent 2kg",             price:540, was:620, cat:"household",emoji:"🧺",unit:"2 kg",    rating:4.7, deal:true, img:"https://loremflickr.com/400/400/detergent,laundry?lock=60" },
-  { id:"p61", name:"Harpic 750ml",                  price:280, was:null,cat:"household",emoji:"🚽",unit:"750 ml",  rating:4.5, img:"https://loremflickr.com/400/400/toilet,cleaner,bottle?lock=61" },
-  { id:"p62", name:"Toilet Paper - 10 pack",        price:350, was:null,cat:"household",emoji:"🧻",unit:"10-pack", rating:4.6, img:"https://loremflickr.com/400/400/toilet,paper,roll?lock=62" },
-  { id:"p63", name:"Dishwashing Liquid 1L",         price:220, was:null,cat:"household",emoji:"🧼",unit:"1 L",     rating:4.5, img:"https://loremflickr.com/400/400/dishwashing,soap,bottle?lock=63" },
+  { id:"p60", name:"Omo Detergent 2kg",             price:540, was:620, cat:"household",emoji:"🧺",unit:"2 kg",    rating:4.7, deal:true },
+  { id:"p61", name:"Harpic 750ml",                  price:280, was:null,cat:"household",emoji:"🚽",unit:"750 ml",  rating:4.5 },
+  { id:"p62", name:"Toilet Paper - 10 pack",        price:350, was:null,cat:"household",emoji:"🧻",unit:"10-pack", rating:4.6 },
+  { id:"p63", name:"Dishwashing Liquid 1L",         price:220, was:null,cat:"household",emoji:"🧼",unit:"1 L",     rating:4.5 },
   // Baby
-  { id:"p70", name:"Pampers Size 4 (40)",           price:1450,was:1650,cat:"baby", emoji:"🍼",unit:"40-pack",     rating:4.8, deal:true, img:"https://loremflickr.com/400/400/diapers,baby,pack?lock=70" },
-  { id:"p71", name:"NAN Infant Formula 400g",       price:1300,was:null,cat:"baby", emoji:"🥛",unit:"400 g",       rating:4.7, img:"https://loremflickr.com/400/400/formula,baby,milk?lock=71" },
-  { id:"p72", name:"Baby Wipes - 80",               price:250, was:null,cat:"baby", emoji:"🧻",unit:"80 sheets",   rating:4.6, img:"https://loremflickr.com/400/400/wipes,baby,pack?lock=72" },
+  { id:"p70", name:"Pampers Size 4 (40)",           price:1450,was:1650,cat:"baby", emoji:"🍼",unit:"40-pack",     rating:4.8, deal:true },
+  { id:"p71", name:"NAN Infant Formula 400g",       price:1300,was:null,cat:"baby", emoji:"🥛",unit:"400 g",       rating:4.7 },
+  { id:"p72", name:"Baby Wipes - 80",               price:250, was:null,cat:"baby", emoji:"🧻",unit:"80 sheets",   rating:4.6 },
   // Beauty
-  { id:"p80", name:"Colgate Toothpaste 100ml",      price:180, was:null,cat:"beauty",emoji:"🪥",unit:"100 ml",     rating:4.7, img:"https://loremflickr.com/400/400/toothpaste,tube?lock=80" },
-  { id:"p81", name:"Lifebuoy Soap 4-pack",          price:240, was:280, cat:"beauty",emoji:"🧼",unit:"4-pack",     rating:4.5, deal:true, img:"https://loremflickr.com/400/400/soap,bar?lock=81" },
-  { id:"p82", name:"Nivea Lotion 400ml",            price:520, was:null,cat:"beauty",emoji:"🧴",unit:"400 ml",     rating:4.6, img:"https://loremflickr.com/400/400/lotion,cream,bottle?lock=82" },
+  { id:"p80", name:"Colgate Toothpaste 100ml",      price:180, was:null,cat:"beauty",emoji:"🪥",unit:"100 ml",     rating:4.7 },
+  { id:"p81", name:"Lifebuoy Soap 4-pack",          price:240, was:280, cat:"beauty",emoji:"🧼",unit:"4-pack",     rating:4.5, deal:true },
+  { id:"p82", name:"Nivea Lotion 400ml",            price:520, was:null,cat:"beauty",emoji:"🧴",unit:"400 ml",     rating:4.6 },
   // Electronics  (Lipa Pole Pole eligible >5000)
-  { id:"p90", name:"Samsung 43\" Smart TV",         price:38500,was:45000,cat:"electronics",emoji:"📺",unit:"each",rating:4.7,deal:true, img:"https://loremflickr.com/400/400/tv,television,screen?lock=90" },
-  { id:"p91", name:"Hotpoint Microwave 20L",        price:9500, was:null, cat:"electronics",emoji:"🍲",unit:"each",rating:4.5, img:"https://loremflickr.com/400/400/microwave,oven?lock=91" },
-  { id:"p92", name:"Ramtons Blender 500W",          price:4200, was:4900, cat:"electronics",emoji:"🫙",unit:"each",rating:4.6, deal:true, img:"https://loremflickr.com/400/400/blender,kitchen?lock=92" },
-  { id:"p93", name:"Sun King Solar Lantern",        price:1800, was:null, cat:"electronics",emoji:"🔦",unit:"each",rating:4.8, img:"https://loremflickr.com/400/400/lantern,solar?lock=93" },
-  { id:"p94", name:"Anker Power Bank 20000mAh",     price:2900, was:null, cat:"electronics",emoji:"🔋",unit:"each",rating:4.7, img:"https://loremflickr.com/400/400/powerbank,charger?lock=94" },
-  { id:"p95", name:"JBL Go Bluetooth Speaker",      price:3400, was:3900, cat:"electronics",emoji:"🔊",unit:"each",rating:4.6, deal:true, img:"https://loremflickr.com/400/400/speaker,bluetooth?lock=95" },
-  { id:"p96", name:"Iron Box (Ramtons)",            price:1800, was:null, cat:"electronics",emoji:"♨️",unit:"each",rating:4.5, img:"https://loremflickr.com/400/400/iron,clothes?lock=96" },
+  { id:"p90", name:"Samsung 43\" Smart TV",         price:38500,was:45000,cat:"electronics",emoji:"📺",unit:"each",rating:4.7,deal:true },
+  { id:"p91", name:"Hotpoint Microwave 20L",        price:9500, was:null, cat:"electronics",emoji:"🍲",unit:"each",rating:4.5 },
+  { id:"p92", name:"Ramtons Blender 500W",          price:4200, was:4900, cat:"electronics",emoji:"🫙",unit:"each",rating:4.6, deal:true },
+  { id:"p93", name:"Sun King Solar Lantern",        price:1800, was:null, cat:"electronics",emoji:"🔦",unit:"each",rating:4.8 },
+  { id:"p94", name:"Anker Power Bank 20000mAh",     price:2900, was:null, cat:"electronics",emoji:"🔋",unit:"each",rating:4.7 },
+  { id:"p95", name:"JBL Go Bluetooth Speaker",      price:3400, was:3900, cat:"electronics",emoji:"🔊",unit:"each",rating:4.6, deal:true },
+  { id:"p96", name:"Iron Box (Ramtons)",            price:1800, was:null, cat:"electronics",emoji:"♨️",unit:"each",rating:4.5 },
   // Stationery
-  { id:"p100",name:"Exercise Books 32-pg (10)",     price:320, was:380, cat:"stationery",emoji:"📒",unit:"10-pack",rating:4.6, deal:true, img:"https://loremflickr.com/400/400/notebook,school,books?lock=100" },
-  { id:"p101",name:"Bic Pens (10-pack)",            price:150, was:null,cat:"stationery",emoji:"🖊️",unit:"10-pack",rating:4.5, img:"https://loremflickr.com/400/400/pen,office?lock=101" },
-  { id:"p102",name:"School Bag (Medium)",           price:1400,was:null,cat:"stationery",emoji:"🎒",unit:"each",   rating:4.7, img:"https://loremflickr.com/400/400/backpack,school?lock=102" },
+  { id:"p100",name:"Exercise Books 32-pg (10)",     price:320, was:380, cat:"stationery",emoji:"📒",unit:"10-pack",rating:4.6, deal:true },
+  { id:"p101",name:"Bic Pens (10-pack)",            price:150, was:null,cat:"stationery",emoji:"🖊️",unit:"10-pack",rating:4.5 },
+  { id:"p102",name:"School Bag (Medium)",           price:1400,was:null,cat:"stationery",emoji:"🎒",unit:"each",   rating:4.7 },
   // Kitchen
-  { id:"p110",name:"Non-stick Pan 28cm",            price:1800,was:2100,cat:"kitchen",emoji:"🍳",unit:"each",      rating:4.6, deal:true, img:"https://loremflickr.com/400/400/frying,pan,kitchen?lock=110" },
-  { id:"p111",name:"6 Glass Tumblers",              price:850, was:null,cat:"kitchen",emoji:"🥃",unit:"set of 6",  rating:4.5, img:"https://loremflickr.com/400/400/glass,tumbler?lock=111" },
-  { id:"p112",name:"Pressure Cooker 5L",            price:3200,was:null,cat:"kitchen",emoji:"🍲",unit:"each",      rating:4.8, img:"https://loremflickr.com/400/400/pressure,cooker?lock=112" },
+  { id:"p110",name:"Non-stick Pan 28cm",            price:1800,was:2100,cat:"kitchen",emoji:"🍳",unit:"each",      rating:4.6, deal:true },
+  { id:"p111",name:"6 Glass Tumblers",              price:850, was:null,cat:"kitchen",emoji:"🥃",unit:"set of 6",  rating:4.5 },
+  { id:"p112",name:"Pressure Cooker 5L",            price:3200,was:null,cat:"kitchen",emoji:"🍲",unit:"each",      rating:4.8 },
 ];
 const findProduct = id => PRODUCTS.find(p => p.id === id);
 const isLipaEligible = p => p.price >= 5000;
@@ -269,8 +269,7 @@ function productCard(p){
           ${isLipaEligible(p) ? `<span class="tag tag--lipa">LIPA POLE POLE</span>` : ""}
         </div>
         <button class="product__wish ${onWish?"is-on":""}" data-action="wish" aria-label="Save">${onWish?"♥":"♡"}</button>
-        ${p.img ? `<img class="product__img" loading="lazy" src="${p.img}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">` : ""}
-        <span class="product__emoji" aria-hidden="true" ${p.img?'style="display:none"':''}>${p.emoji}</span>
+        <span aria-hidden="true">${p.emoji}</span>
       </div>
       <div class="product__name" data-action="view">${p.name}</div>
       <div class="product__rating">${stars(p.rating)} <span>${p.rating.toFixed(1)}</span></div>
@@ -400,7 +399,7 @@ function renderProduct(id){
   const verdict = trend ? `Bei imeshuka ${Math.round((1-now/earlier)*100)}% in 30 days — good time to buy.` :
                           `Bei imepanda ${Math.round((now/earlier-1)*100)}% in 30 days.`;
   $("#pdp").innerHTML = `
-    <div class="pdp__media">${p.img ? `<img class="pdp__img" src="${p.img.replace('400/400','800/800')}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="pdp__emoji" style="display:none">${p.emoji}</span>` : p.emoji}</div>
+    <div class="pdp__media">${p.emoji}</div>
     <div>
       <span class="muted">${(CATEGORIES.find(c=>c.id===p.cat)||{}).name||""}${p.house?" · House Brand":""}</span>
       <h1 class="pdp__title">${p.name}</h1>
@@ -479,7 +478,7 @@ function renderCart(){
       </div>
       ${items.map(({p,qty,by}) => `
         <div class="cart-line" data-id="${p.id}">
-          <div class="cart-line__media">${p.img ? `<img loading="lazy" src="${p.img}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none">${p.emoji}</span>` : p.emoji}${by?`<span class="cart-line__avatar">${initials(by)}</span>`:""}</div>
+          <div class="cart-line__media">${p.emoji}${by?`<span class="cart-line__avatar">${initials(by)}</span>`:""}</div>
           <div>
             <div class="cart-line__name">${p.name}</div>
             <div class="cart-line__price">${fmt(p.price)} <small class="muted">/ ${p.unit}</small></div>
@@ -1350,7 +1349,7 @@ function openCartDrawer(latestProduct, qty){
   const pct = Math.min(100, (sub / 3000) * 100);
   $("#cartDrawerBody").innerHTML = items.slice(0,5).map(({p,qty}) => `
     <div class="cdrawer__line">
-      <div class="cdrawer__emoji">${p.img ? `<img loading="lazy" src="${p.img}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none">${p.emoji}</span>` : p.emoji}</div>
+      <div class="cdrawer__emoji">${p.emoji}</div>
       <div style="flex:1">
         <div class="cdrawer__name">${p.name.split(" - ")[0]}</div>
         <div class="cdrawer__price">${fmt(p.price)} × ${qty}</div>
