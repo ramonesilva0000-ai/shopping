@@ -33,7 +33,7 @@ Plus the table stakes done right:
 - **🛵 Live boda tracking** with animated map and ETA on every order
 - **📈 Bei Tracker** — 30-day price history chart on every product. Anti-inflation transparency Kenyans will love.
 - **🎙️ Voice search** in Swahili AND English ("Tafuta unga ya Soko")
-- **⭐ KipChim Rewards** — 1pt per KSh 100, redeem at checkout, daily spin-the-wheel for bonus
+- **⭐ KipChim Rewards** — 1pt per KSh 110, redeem at checkout, daily spin-the-wheel for bonus
 - **📞 USSD `*483*KCM#` and WhatsApp 0700 547 244** for non-smartphone users
 - **🧾 Receipt scan** → earn points on in-store purchases too (bridges offline shopping into the loyalty programme)
 

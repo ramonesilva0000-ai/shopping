@@ -507,7 +507,7 @@ function renderCart(){
         <button class="btn btn--ghost">Apply</button>
       </form>
       <button class="btn btn--gold btn--block btn--lg" data-route="checkout">Proceed to Checkout</button>
-      <p class="muted" style="margin-top:10px;font-size:.8rem;text-align:center">You'll earn <strong>${Math.floor(total/100)}</strong> KipChim points ⭐</p>
+      <p class="muted" style="margin-top:10px;font-size:.8rem;text-align:center">You'll earn <strong>${Math.floor(total/110)}</strong> KipChim points ⭐</p>
     </aside>`;
   v.querySelectorAll(".cart-line").forEach(line => {
     const id = line.dataset.id;
@@ -756,7 +756,7 @@ function finalizeOrder(total){
     where: cdata.deliveryType==="delivery" ? cdata.address : cdata.deliveryType==="pickup" ? {branch:cdata.branch} :
            cdata.deliveryType==="mboga"    ? {kiosk:cdata.kiosk}    : {recipient:cdata.recipient},
     payment: cdata.payment,
-    pointsEarned: Math.floor(total/100),
+    pointsEarned: Math.floor(total/110),
   };
   state.orders.unshift(order);
   state.rewardsPoints += order.pointsEarned;
@@ -885,7 +885,7 @@ function accountPanel(){
     </form>`;
   if (aTab === "rewards") return `
     <h2>⭐ KipChim Rewards</h2>
-    <p>1 point per KSh 100. 100 points = KSh 50 off.</p>
+    <p>1 point for every <strong>KSh 110</strong> spent. 100 points = <strong>KSh 50 off</strong> at checkout.</p>
     <div class="rewards">
       <div class="reward-card"><h4>Balance</h4><div class="big">${state.rewardsPoints} pts</div><p>${fmt(state.rewardsPoints*0.5)}</p></div>
       <div class="reward-card reward-card--gold"><h4>Tier</h4><div class="big">${state.rewardsPoints>=500?"Gold":state.rewardsPoints>=200?"Silver":"Bronze"}</div></div>
