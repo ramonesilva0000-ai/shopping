@@ -162,11 +162,14 @@ const VOICE_DEMOS = [
 const KEY = "kipchimatt:v2";
 const defaultState = {
   cart:{}, wishlist:[], user:null, orders:[], rewardsPoints:240, promo:null,
-  pamoja:null,           // {code, members:[{id,name,initial}], items:{pid:{qty,by}}}
-  bbasket:[],            // Bei Yangu basket
-  spinSeen:false,        // welcome wheel
-  staff:null,            // { name, role, branch } when admin is logged in
+  pamoja:null,
+  bbasket:[],
+  spinSeen:false,
+  staff:null,
   productOverrides:{},   // {pid: {price, stock, deal}} — admin product edits
+  customProducts:[],     // products added by admin
+  deletedProducts:[],    // ids of products admin removed
+  customPromos:null,     // null = use seed PROMOS, otherwise the live set
 };
 let state = load();
 function load(){ try{ const r=localStorage.getItem(KEY); if(!r) return clone(defaultState); return {...clone(defaultState),...JSON.parse(r)}; }catch{ return clone(defaultState); } }
@@ -543,8 +546,10 @@ function renderCart(){
     });
   });
 }
-const PROMOS = { KIPCHIM10:{type:"pct",value:10}, FRESH50:{type:"flat",value:50}, MAMA200:{type:"flat",value:200} };
-function promoDiscount(sub){ const c = PROMOS[state.promo]; if(!c) return 0; return c.type==="pct" ? Math.round(sub*c.value/100) : c.value; }
+const SEED_PROMOS = { KIPCHIM10:{type:"pct",value:10,label:"10% off"}, FRESH50:{type:"flat",value:50,label:"KSh 50 off"}, MAMA200:{type:"flat",value:200,label:"KSh 200 off"} };
+function getPromos(){ return state.customPromos || SEED_PROMOS; }
+const PROMOS = new Proxy({}, { get(_,k){ return getPromos()[k]; }, has(_,k){ return k in getPromos(); }, ownKeys(){ return Object.keys(getPromos()); }, getOwnPropertyDescriptor(_,k){ return { enumerable:true, configurable:true, value:getPromos()[k] }; } });
+function promoDiscount(sub){ const c = getPromos()[state.promo]; if(!c) return 0; return c.type==="pct" ? Math.round(sub*c.value/100) : c.value; }
 
 // ---------- CHECKOUT ----------
 let cstep = 1;
@@ -1543,12 +1548,13 @@ function renderAdmin(){
         </div>
         <nav class="admin-nav">
           <button data-atab="dashboard" class="${adminTab==='dashboard'?'is-active':''}">📊 Dashboard</button>
-          <button data-atab="orders"    class="${adminTab==='orders'?'is-active':''}">📦 Orders</button>
-          <button data-atab="products"  class="${adminTab==='products'?'is-active':''}">🛒 Products</button>
-          <button data-atab="branches"  class="${adminTab==='branches'?'is-active':''}">🏪 Branches</button>
-          <button data-atab="promos"    class="${adminTab==='promos'?'is-active':''}">💰 Promos</button>
-          <button data-atab="customers" class="${adminTab==='customers'?'is-active':''}">👥 Customers</button>
-          <button data-atab="reports"   class="${adminTab==='reports'?'is-active':''}">📈 Reports</button>
+          <button data-atab="orders"      class="${adminTab==='orders'?'is-active':''}">📦 Orders</button>
+          <button data-atab="deliveries"  class="${adminTab==='deliveries'?'is-active':''}">🛵 Deliveries</button>
+          <button data-atab="products"    class="${adminTab==='products'?'is-active':''}">🛒 Products</button>
+          <button data-atab="branches"    class="${adminTab==='branches'?'is-active':''}">🏪 Branches</button>
+          <button data-atab="promos"      class="${adminTab==='promos'?'is-active':''}">💰 Promos</button>
+          <button data-atab="customers"   class="${adminTab==='customers'?'is-active':''}">👥 Customers</button>
+          <button data-atab="reports"     class="${adminTab==='reports'?'is-active':''}">📈 Reports</button>
           <div class="admin-nav__sep"><span>Account</span></div>
           <button data-atab="settings"  class="${adminTab==='settings'?'is-active':''}">⚙️ Settings</button>
           <button data-atab="logout">🚪 Sign out</button>
@@ -1558,7 +1564,7 @@ function renderAdmin(){
       </aside>
       <main class="admin__main">
         <div class="admin__head">
-          <h2 id="adminTitle">${({dashboard:"Dashboard",orders:"Orders",products:"Products",branches:"Branches",promos:"Promo codes",customers:"Customers",reports:"Reports",settings:"Settings"})[adminTab]||""}</h2>
+          <h2 id="adminTitle">${({dashboard:"Dashboard",orders:"Orders",deliveries:"Live deliveries",products:"Products",branches:"Branches",promos:"Promo codes",customers:"Customers",reports:"Reports",settings:"Settings"})[adminTab]||""}</h2>
           <div class="admin__user">
             <span class="dot dot--live"></span>
             <strong>${state.staff.name}</strong> · ${state.staff.role}
@@ -1609,14 +1615,15 @@ function renderAdminLogin(){
 }
 
 function adminPanel(){
-  if (adminTab === "dashboard") return adminDashboard();
-  if (adminTab === "orders")    return adminOrders();
-  if (adminTab === "products")  return adminProducts();
-  if (adminTab === "branches")  return adminBranches();
-  if (adminTab === "promos")    return adminPromos();
-  if (adminTab === "customers") return adminCustomers();
-  if (adminTab === "reports")   return adminReports();
-  if (adminTab === "settings")  return adminSettings();
+  if (adminTab === "dashboard")  return adminDashboard();
+  if (adminTab === "orders")     return adminOrders();
+  if (adminTab === "deliveries") return adminDeliveries();
+  if (adminTab === "products")   return adminProducts();
+  if (adminTab === "branches")   return adminBranches();
+  if (adminTab === "promos")     return adminPromos();
+  if (adminTab === "customers")  return adminCustomers();
+  if (adminTab === "reports")    return adminReports();
+  if (adminTab === "settings")   return adminSettings();
   return "";
 }
 
@@ -1692,9 +1699,31 @@ function adminOrders(){
 // ---------- ADMIN: PRODUCTS ----------
 function adminProducts(){
   return `
+    <div class="adform">
+      <h3>➕ Add a new product</h3>
+      <form id="adAddProd">
+        <div class="row">
+          <div><label>Name</label><input name="name" required placeholder="e.g. Kifaru Cooking Fat 1kg"></div>
+          <div><label>Category</label><select name="cat" required>${CATEGORIES.map(c=>`<option value="${c.id}">${c.emoji} ${c.name}</option>`).join("")}</select></div>
+          <div><label>Emoji</label><input name="emoji" required maxlength="4" placeholder="🛢️" style="text-align:center;font-size:1.2rem"></div>
+        </div>
+        <div class="row">
+          <div><label>Price (KSh)</label><input name="price" type="number" required min="1" placeholder="350"></div>
+          <div><label>Was-price (optional)</label><input name="was" type="number" min="1" placeholder="leave blank if no discount"></div>
+          <div><label>Unit</label><input name="unit" required placeholder="1 kg pack"></div>
+          <div><label>Stock</label><input name="stock" type="number" required min="0" value="50"></div>
+        </div>
+        <div class="row">
+          <div><label><input name="deal" type="checkbox"> On offer (Bei Bomba)</label></div>
+          <div><label><input name="house" type="checkbox"> Kipchimatt house brand</label></div>
+          <div><label><input name="isNew" type="checkbox" checked> New arrival</label></div>
+        </div>
+        <button class="btn btn--primary" type="submit">Add product →</button>
+      </form>
+    </div>
     <div class="adtable">
       <div class="adtable__head">
-        <h3>${PRODUCTS.length} products</h3>
+        <h3>${PRODUCTS.length} products in catalog</h3>
         <input id="adProdSearch" placeholder="Search products…" class="adinp" style="width:200px">
       </div>
       <table id="adProdTable">
@@ -1705,13 +1734,17 @@ function adminProducts(){
             const price = o.price ?? p.price;
             const stock = o.stock ?? (p.stock ?? 50);
             const deal  = o.deal  ?? p.deal ?? false;
+            const custom = (state.customProducts||[]).some(c => c.id === p.id);
             return `<tr data-pid="${p.id}">
-              <td>${p.img ? `<img src="${p.img}" alt="">` : `<span style="display:inline-block;width:34px;height:34px;background:var(--gold-l);border-radius:6px;text-align:center;line-height:34px;margin-right:8px">${p.emoji}</span>`}<strong>${p.name}</strong></td>
+              <td>${p.img ? `<img src="${p.img}" alt="">` : `<span style="display:inline-block;width:34px;height:34px;background:var(--gold-l);border-radius:6px;text-align:center;line-height:34px;margin-right:8px">${p.emoji}</span>`}<strong>${p.name}</strong>${custom?' <span class="pill pill--paid" style="font-size:.62rem">CUSTOM</span>':''}</td>
               <td>${(CATEGORIES.find(c=>c.id===p.cat)||{}).name||""}</td>
               <td><input class="adinp" type="number" data-edit="price" value="${price}" min="0"></td>
               <td><input class="adinp" type="number" data-edit="stock" value="${stock}" min="0"></td>
               <td><input type="checkbox" data-edit="deal" ${deal?"checked":""}></td>
-              <td class="adtable__actions"><button data-save-prod="${p.id}">Save</button></td>
+              <td class="adtable__actions">
+                <button data-save-prod="${p.id}">Save</button>
+                <button class="danger" data-del-prod="${p.id}">Delete</button>
+              </td>
             </tr>`;
           }).join("")}
         </tbody>
@@ -1743,22 +1776,101 @@ function adminBranches(){
 
 // ---------- ADMIN: PROMOS ----------
 function adminPromos(){
-  const codes = Object.entries(PROMOS);
+  if (!state.customPromos) state.customPromos = { ...SEED_PROMOS };
+  const codes = Object.entries(state.customPromos);
   return `
+    <div class="adform">
+      <h3>➕ Create a new promo code</h3>
+      <form id="adAddPromo">
+        <div class="row">
+          <div><label>Code (uppercase)</label><input name="code" required pattern="[A-Z0-9]{4,12}" placeholder="MAMA250" style="text-transform:uppercase;font-family:monospace"></div>
+          <div><label>Type</label><select name="type" required><option value="pct">% off (percentage)</option><option value="flat">KSh off (flat amount)</option></select></div>
+          <div><label>Value</label><input name="value" type="number" required min="1" placeholder="10 or 200"></div>
+          <div><label>Label (optional)</label><input name="label" placeholder="e.g. Mother's Day"></div>
+        </div>
+        <button class="btn btn--primary" type="submit">Create code</button>
+      </form>
+    </div>
     <div class="adtable">
-      <div class="adtable__head"><h3>${codes.length} active promo codes</h3></div>
-      <table>
-        <thead><tr><th>Code</th><th>Discount</th><th>Type</th></tr></thead>
+      <div class="adtable__head"><h3>${codes.length} active promo code${codes.length===1?"":"s"}</h3></div>
+      ${codes.length ? `<table>
+        <thead><tr><th>Code</th><th>Discount</th><th>Type</th><th>Label</th><th></th></tr></thead>
         <tbody>
           ${codes.map(([code,c]) => `<tr>
-            <td><strong style="font-family:monospace">${code}</strong></td>
-            <td>${c.type==="pct"?`${c.value}% off`:`${fmt(c.value)} off`}</td>
+            <td><strong style="font-family:monospace;letter-spacing:.5px">${code}</strong></td>
+            <td><strong>${c.type==="pct"?`${c.value}% off`:`${fmt(c.value)} off`}</strong></td>
             <td>${c.type==="pct"?"Percentage":"Flat amount"}</td>
+            <td>${c.label||"—"}</td>
+            <td class="adtable__actions"><button class="danger" data-del-promo="${code}">Remove</button></td>
           </tr>`).join("")}
         </tbody>
-      </table>
+      </table>` : `<div class="adtable__empty">No active promo codes. Create one above.</div>`}
+    </div>`;
+}
+
+// ---------- ADMIN: DELIVERIES ----------
+function adminDeliveries(){
+  const inFlight = (state.orders||[]).filter(o => o.delivery_type === "delivery" && o.status !== "delivered" && o.status !== "cancelled");
+  const delivered = (state.orders||[]).filter(o => o.delivery_type === "delivery" && o.status === "delivered");
+  // Demo riders pool
+  const RIDERS = [["Kibet","KAA 234X"],["Otieno","KCA 778P"],["Auma","KBD 119W"],["Kipruto","KAH 442N"]];
+  const riderFor = oid => {
+    let h = 0; for (let i=0;i<oid.length;i++) h = (h*31 + oid.charCodeAt(i)) >>> 0;
+    return RIDERS[h % RIDERS.length];
+  };
+  return `
+    <div class="kpis">
+      <div class="kpi kpi--red"><span class="kpi__icon">🛵</span>
+        <div class="kpi__label">In-flight</div><div class="kpi__value">${inFlight.length}</div>
+        <div class="kpi__delta up">${inFlight.length?'On the road now':'No active runs'}</div></div>
+      <div class="kpi kpi--gold"><span class="kpi__icon">📦</span>
+        <div class="kpi__label">Awaiting dispatch</div><div class="kpi__value">${inFlight.filter(o=>o.status==='paid'||o.status==='pending').length}</div>
+        <div class="kpi__delta down">Dispatch within 30 min</div></div>
+      <div class="kpi kpi--green"><span class="kpi__icon">✓</span>
+        <div class="kpi__label">Delivered today</div><div class="kpi__value">${delivered.length}</div>
+        <div class="kpi__delta up">${delivered.length>=5?'Great pace':'Building up'}</div></div>
+      <div class="kpi kpi--ink"><span class="kpi__icon">⏱</span>
+        <div class="kpi__label">Avg ETA</div><div class="kpi__value">22 min</div>
+        <div class="kpi__delta up">▼ 4 min vs last week</div></div>
     </div>
-    <p class="muted">In production this becomes a CRUD form where you create/expire promos with usage limits and start/end dates.</p>`;
+    <div class="adtable">
+      <div class="adtable__head"><h3>${inFlight.length} delivery${inFlight.length===1?"":"ies"} in progress</h3></div>
+      ${inFlight.length ? `<table>
+        <thead><tr><th>Order</th><th>Customer</th><th>Rider</th><th>Destination</th><th>Status</th><th>ETA</th><th>Actions</th></tr></thead>
+        <tbody>
+          ${inFlight.map(o => {
+            const r = riderFor(o.id);
+            const eta = (o.status==='shipped' ? Math.floor(Math.random()*15)+5 : Math.floor(Math.random()*40)+30) + ' min';
+            const where = o.where||{};
+            return `<tr>
+              <td><strong>${o.id}</strong><br/><small class="muted">${fmt(o.total)}</small></td>
+              <td><strong>${where.name||"—"}</strong><br/><small class="muted">${where.phone||""}</small></td>
+              <td>🛵 ${r[0]}<br/><small class="muted">${r[1]}</small></td>
+              <td>${where.line1||"—"}<br/><small class="muted">${where.town||""}</small></td>
+              <td><span class="pill pill--${o.status}">${o.status}</span></td>
+              <td><strong>${eta}</strong></td>
+              <td class="adtable__actions">
+                ${o.status==='paid'||o.status==='pending' ? `<button data-dispatch="${o.id}">Dispatch</button>`:''}
+                ${o.status==='shipped' ? `<button data-delivered="${o.id}">Mark delivered</button>`:''}
+                <button data-track="${o.id}">Track</button>
+              </td>
+            </tr>`;
+          }).join("")}
+        </tbody>
+      </table>` : `<div class="adtable__empty">No deliveries in progress. Once a customer places an order with home delivery, it'll appear here for dispatch.</div>`}
+    </div>
+    ${delivered.length ? `<div class="adtable">
+      <div class="adtable__head"><h3>Recently delivered (${delivered.length})</h3></div>
+      <table>
+        <thead><tr><th>Order</th><th>Customer</th><th>Total</th><th>Delivered at</th></tr></thead>
+        <tbody>${delivered.slice(0,8).map(o => `<tr>
+          <td><strong>${o.id}</strong></td>
+          <td>${o.where?.name||"—"}</td>
+          <td>${fmt(o.total)}</td>
+          <td>${new Date(o.placedAt).toLocaleString("en-KE",{dateStyle:"short",timeStyle:"short"})}</td>
+        </tr>`).join("")}</tbody>
+      </table>
+    </div>`:""}`;
 }
 
 // ---------- ADMIN: CUSTOMERS ----------
@@ -1896,6 +2008,118 @@ function bindAdminPanel(){
     });
   });
 
+  // Add new product
+  const addProd = $("#adAddProd");
+  if (addProd) addProd.addEventListener("submit", e => {
+    e.preventDefault();
+    const d = Object.fromEntries(new FormData(e.target));
+    const id = "c" + Date.now().toString().slice(-6);
+    const newP = {
+      id, name: d.name.trim(),
+      price: parseInt(d.price)||0,
+      was: d.was ? (parseInt(d.was)||null) : null,
+      cat: d.cat, emoji: d.emoji.trim() || "🛒",
+      unit: d.unit.trim(),
+      rating: 4.5,
+      deal: !!d.deal, house: !!d.house, isNew: !!d.isNew,
+      stock: parseInt(d.stock)||50,
+    };
+    PRODUCTS.push(newP);
+    state.customProducts = state.customProducts || [];
+    state.customProducts.push(newP);
+    save();
+    renderHome();
+    renderAdmin();
+    toast(`✓ Added ${newP.name.split(" - ")[0]}`);
+  });
+
+  // Delete product
+  $$("[data-del-prod]").forEach(b => b.addEventListener("click", () => {
+    const pid = b.dataset.delProd;
+    const p = findProduct(pid); if (!p) return;
+    openModal(`<div style="text-align:center">
+      <div style="font-size:3rem">🗑</div>
+      <h2>Delete "${p.name}"?</h2>
+      <p class="muted">This removes it from the customer catalog. You can re-add it later.</p>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
+        <button class="btn btn--ghost" data-close>Cancel</button>
+        <button class="btn btn--danger" id="confirmDel">Yes, delete</button>
+      </div>
+    </div>`);
+    $("#confirmDel").addEventListener("click", () => {
+      const idx = PRODUCTS.findIndex(x => x.id === pid);
+      if (idx >= 0) PRODUCTS.splice(idx, 1);
+      state.deletedProducts = state.deletedProducts || [];
+      state.deletedProducts.push(pid);
+      // Also remove from customProducts if it was a custom one
+      if (state.customProducts) state.customProducts = state.customProducts.filter(c => c.id !== pid);
+      // And from any cart / wishlist
+      delete state.cart[pid];
+      state.wishlist = (state.wishlist||[]).filter(x => x !== pid);
+      save(); closeModal(); renderHome(); renderAdmin();
+      toast(`✓ Deleted ${p.name.split(" - ")[0]}`);
+    });
+  }));
+
+  // Add promo
+  const addPromo = $("#adAddPromo");
+  if (addPromo) addPromo.addEventListener("submit", e => {
+    e.preventDefault();
+    const d = Object.fromEntries(new FormData(e.target));
+    const code = d.code.trim().toUpperCase();
+    if (!code.match(/^[A-Z0-9]{4,12}$/)) return toast("Code must be 4-12 letters/numbers");
+    if (!state.customPromos) state.customPromos = { ...SEED_PROMOS };
+    state.customPromos[code] = {
+      type: d.type, value: parseInt(d.value)||0,
+      label: d.label.trim() || (d.type==="pct" ? `${d.value}% off` : `${fmt(d.value)} off`)
+    };
+    save(); renderAdmin(); toast(`✓ Promo ${code} created`);
+  });
+
+  // Delete promo
+  $$("[data-del-promo]").forEach(b => b.addEventListener("click", () => {
+    const code = b.dataset.delPromo;
+    if (!state.customPromos) state.customPromos = { ...SEED_PROMOS };
+    delete state.customPromos[code];
+    // If a customer had this promo applied, clear it
+    if (state.promo === code) state.promo = null;
+    save(); renderAdmin(); toast(`✓ Promo ${code} removed`);
+  }));
+
+  // Dispatch (deliveries)
+  $$("[data-dispatch]").forEach(b => b.addEventListener("click", () => {
+    const o = state.orders.find(x => x.id === b.dataset.dispatch);
+    if (!o) return;
+    o.status = "shipped"; save(); renderAdmin();
+    toast(`🛵 ${o.id} dispatched — SMS sent to customer`);
+  }));
+
+  // Mark delivered
+  $$("[data-delivered]").forEach(b => b.addEventListener("click", () => {
+    const o = state.orders.find(x => x.id === b.dataset.delivered);
+    if (!o) return;
+    o.status = "delivered"; save(); renderAdmin();
+    toast(`✓ ${o.id} delivered`);
+  }));
+
+  // Track (live boda map modal)
+  $$("[data-track]").forEach(b => b.addEventListener("click", () => {
+    const o = state.orders.find(x => x.id === b.dataset.track);
+    if (!o) return;
+    openModal(`<h2>🛵 Tracking ${o.id}</h2>
+      <p class="muted">${o.where?.name||""} · ${o.where?.line1||""}, ${o.where?.town||""}</p>
+      <div class="bodamap" style="margin-top:14px">
+        <div class="bodamap__map">
+          <div class="bodamap__route"></div>
+          <div class="bodamap__store">🏪</div>
+          <div class="bodamap__home">🏠</div>
+          <div class="bodamap__rider">🛵</div>
+        </div>
+        <div class="bodamap__eta"><span>Rider on the move</span><span>ETA 6 min</span></div>
+      </div>
+      <p style="margin-top:12px;font-size:.85rem">In production this shows a real Google Maps overlay with the rider's GPS location streaming via WebSocket.</p>`);
+  }));
+
   // Reset demo data
   const r = $("#adResetData");
   if (r) r.addEventListener("click", () => {
@@ -1918,10 +2142,20 @@ function bindAdminPanel(){
   });
 }
 
-// Apply product overrides on init so price changes persist across reloads
+// Re-apply admin edits + custom products + deletions on every page load so
+// changes persist across sessions (the data lives in localStorage).
 function applyProductOverrides(){
-  if (!state.productOverrides) return;
-  Object.entries(state.productOverrides).forEach(([pid, o]) => {
+  // Inject custom products that aren't in the seed catalog yet
+  (state.customProducts||[]).forEach(cp => {
+    if (!PRODUCTS.find(p => p.id === cp.id)) PRODUCTS.push(cp);
+  });
+  // Remove products the admin deleted
+  (state.deletedProducts||[]).forEach(pid => {
+    const idx = PRODUCTS.findIndex(p => p.id === pid);
+    if (idx >= 0) PRODUCTS.splice(idx, 1);
+  });
+  // Apply per-product price/stock/deal overrides
+  Object.entries(state.productOverrides||{}).forEach(([pid, o]) => {
     const p = findProduct(pid);
     if (!p) return;
     if (o.price != null) p.price = o.price;
@@ -1929,7 +2163,6 @@ function applyProductOverrides(){
     if (o.deal  != null) p.deal  = o.deal;
   });
 }
-// Patch init to apply overrides
 const __init__ = init;
 init = function(){ applyProductOverrides(); __init__(); };
 
