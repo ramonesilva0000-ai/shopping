@@ -38,7 +38,7 @@
 >
 > **Second**, when our own customers do shop online from us, they're doing it through Glovo or Bolt — and Glovo is taking 18 to 25 percent of every order. That's our margin disappearing into Spain.
 >
-> **Third**, we have something they don't: 25 years of trust, 8 stores, our own bakery making Kipchimatt Bread, our own Mbogo Tea, our own Valley Sugar, our own water. We have *brand*. We're just not putting it to work online."
+> **Third**, we have something they don't: 25 years of trust, 11 stores across the North Rift and Nandi, our own bakery making Kipchimatt Bread, our own Mbogo Tea, our own Valley Sugar, our own water. We have *brand*. We're just not putting it to work online."
 
 ### 1:30 — THE DEMO (3 minutes — this is the engine)
 
@@ -67,7 +67,7 @@
 > "Here is why this works for us specifically, and not for Naivas or Carrefour:
 >
 > - We are **owner-operated**. We can decide today and ship in 16 weeks. Naivas needs three committee meetings just to pick a font.
-> - We have **8 branches concentrated in one region**. The North Rift is our ground. Same-day delivery here is logistically simple. Trying to launch a Nairobi-first app means competing with five well-funded incumbents on day one.
+> - We have **11 branches concentrated in one region** — Kericho, Bomet, Nandi, North Rift. Same-day delivery here is logistically simple. Trying to launch a Nairobi-first app means competing with five well-funded incumbents on day one.
 > - We have **house brands**. Kipchimatt Bread, Mbogo Tea, Valley Sugar, Mbogo Water, Keben Tea. Online lets us put those at the top of search results in our own app. We can't do that on Glovo.
 > - We are **debt-free** and we just celebrated 25 years. The board's appetite for the next chapter is real.
 >
@@ -75,15 +75,15 @@
 
 ### 5:30 — THE BUSINESS CASE (60 seconds)
 
-> "Conservative numbers. Each of our 8 branches sees roughly 2,000 walk-ins a day. That's 16,000 daily customer touchpoints across the chain.
+> "Conservative numbers. Our 11 branches see roughly 22,000 walk-ins a day combined — counting that the Mini and Express formats are smaller than the Mains, Primes and Heights.
 >
-> If even **1 percent** of those customers migrate to online in year one, that's 160 online orders a day. Industry data says online baskets run 30% larger than walk-in. Conservatively, KSh 2,500 per online order.
+> If even **1 percent** of those customers migrate to online in year one, that's 220 online orders a day. Industry data says online baskets run 30% larger than walk-in. Conservatively, KSh 2,500 per online order.
 >
-> That's KSh 400,000 a day in online revenue. KSh 12 million a month. KSh 144 million in year one.
+> That's KSh 550,000 a day in online revenue. KSh 16.5 million a month. **About KSh 175 million in year one**.
 >
-> At a 5-7% net margin after delivery and payment fees, that's roughly **KSh 7-10 million in year-one profit**.
+> At a 5-7% net margin after delivery and payment fees, that's roughly **KSh 9-12 million in year-one profit**.
 >
-> The investment we're asking for to start this is KSh 3.5 million. The pilot pays itself back in **6 to 9 months**. From month 10 onwards, every shilling is incremental margin to the group.
+> The investment we're asking for to start this is KSh 3.5 million. The pilot pays itself back in **4 to 6 months**. From month 7 onwards, every shilling is incremental margin to the group.
 >
 > And those numbers do not yet count: the loyalty data we'll capture for the first time, the diaspora revenue from Tuma Nyumbani, the BNPL volume from Lipa Pole Pole, or the mama mboga pickup fees."
 
@@ -95,7 +95,7 @@
 > **Two**: Permission to launch in Eldoret Serani Mall and Litein, our two highest-traffic branches.
 > **Three**: A working sponsor group of three directors who will meet me every two weeks for 30 minutes to unblock decisions.
 >
-> If we say yes today, the app is live for customers by [date 16 weeks out]. Within 12 months we'll have full data on whether to scale to all 8 branches.
+> If we say yes today, the app is live for customers by [date 16 weeks out]. Within 12 months we'll have full data on whether to scale to all 11 branches.
 >
 > The downside is bounded. The upside is the next 25 years."
 
@@ -149,12 +149,12 @@ All figures in **Kenyan Shillings**. Recommend **Option B** unless cash is const
 | In-store kiosks — tablets at checkouts to drive sign-ups | 120,000 |
 | Contingency (15%) | 470,000 |
 
-### Option C — Full Phase 1 (all 8 branches, 24 weeks)
-**Total: KSh 5.5M**
+### Option C — Full Phase 1 (all 11 branches, 24 weeks)
+**Total: KSh 6.5M**
 
-Adds: 6 more branches' product photography, fleet expansion (16 riders), 200 mama mboga partners, native Android/iOS dev for Play Store and App Store launch, in-house POS bridge, customer support team.
+Adds: 9 more branches' product photography, fleet expansion (22 riders), 250 mama mboga partners, native Android/iOS dev for Play Store and App Store launch, in-house POS bridge across all 11 stores, customer support team.
 
-> ❗ **Recommendation:** Start with Option B. The pilot generates the data we need to justify Option C with confidence. Doing all 8 branches at once spreads us too thin.
+> ❗ **Recommendation:** Start with Option B. The pilot generates the data we need to justify Option C with confidence. Doing all 11 branches at once spreads us too thin.
 
 ---
 
@@ -193,9 +193,9 @@ What does success look like at month 4 and month 12. **Be honest about what we'd
 
 ### Year-one targets (after pilot)
 
-- KSh 144M+ online revenue across all 8 branches by month 12
+- KSh 175M+ online revenue across all 11 branches by month 12
 - 25,000+ registered customers
-- 6-9 months payback on the KSh 3.5M
+- 4-6 months payback on the KSh 3.5M
 - Glovo / Bolt orders down materially as customers move to direct
 
 ---
@@ -234,7 +234,7 @@ What does success look like at month 4 and month 12. **Be honest about what we'd
 
 ### Q8. What about returns and refunds?
 
-> "Same policy as in-store — fresh produce returnable within 24 hours, packaged 7 days, electronics 14 days — but with the convenience of *bring it to any of our 8 branches*. Refunds reverse via M-Pesa for STK-paid orders, in cash at the branch otherwise. We provision a 1.5% returns reserve in the budget."
+> "Same policy as in-store — fresh produce returnable within 24 hours, packaged 7 days, electronics 14 days — but with the convenience of *bring it to any of our 11 branches*. Refunds reverse via M-Pesa for STK-paid orders, in cash at the branch otherwise. We provision a 1.5% returns reserve in the budget."
 
 ### Q9. What about cyber security? What if we get hacked?
 
@@ -254,7 +254,7 @@ What does success look like at month 4 and month 12. **Be honest about what we'd
 
 ### Q13. Why don't we just deliver via Glovo / Bolt and skip the cost?
 
-> "Two reasons. **One**: Glovo takes 18-25% of every order. On a KSh 144M annual run-rate, that's KSh 26-36M of margin we keep by going direct. The investment pays for itself just on this. **Two**: Glovo doesn't give us the customer data. They are a marketplace — they own the customer relationship. We become a no-name supplier. With our own app, every customer is *our* customer."
+> "Two reasons. **One**: Glovo takes 18-25% of every order. On a KSh 175M annual run-rate, that's KSh 32-44M of margin we keep by going direct. The investment pays for itself just on this. **Two**: Glovo doesn't give us the customer data. They are a marketplace — they own the customer relationship. We become a no-name supplier. With our own app, every customer is *our* customer."
 
 ### Q14. How is this different from us just having a Facebook page and taking WhatsApp orders?
 
@@ -317,7 +317,7 @@ A clean checklist. **Walk in and walk out with these decisions made.**
 ┌──────────────────────────────────────────────────────┐
 │  THE THREE NUMBERS                                   │
 │  KSh 3.5M to build the pilot                         │
-│  KSh 144M target online revenue, year 1              │
+│  KSh 175M target online revenue, year 1              │
 │  6–9 months payback                                  │
 └──────────────────────────────────────────────────────┘
 ```
@@ -326,7 +326,7 @@ A clean checklist. **Walk in and walk out with these decisions made.**
 ┌──────────────────────────────────────────────────────┐
 │  THE THREE REASONS WE WIN                            │
 │  1. Owner-operated — we move fast                    │
-│  2. Concentrated 8-branch network in our region      │
+│  2. Concentrated 11-branch network in our region     │
 │  3. House brands surface in our own app, not Glovo's │
 └──────────────────────────────────────────────────────┘
 ```

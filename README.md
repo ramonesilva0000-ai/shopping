@@ -58,9 +58,9 @@ The app uses our brand mark — gold **K** on a deep green tile — and a green-
 
 ## 📍 Branches wired into the app
 
-All 8 Kipchimatt locations are real options for branch pickup, Mama Mboga area routing, and Tuma Nyumbani targets:
+All 11 Kipchimatt locations are real options for branch pickup, Mama Mboga area routing, and Tuma Nyumbani targets:
 
-Kapsoit · Litein · Mogogosiek · Nandi Hills · Kapsabet · Mosoriot · Ainamoi · Eldoret (Serani Mall)
+Kapsoit Main · Kapsoit Mini · Ainamoi · Litein Prime · Litein Square · Mogogosiek · Nandi Hills · Kapsabet Heights · Kapsabet Express · Mosoriot · Eldoret (Serani Mall)
 
 ---
 
@@ -89,7 +89,7 @@ Kapsoit · Litein · Mogogosiek · Nandi Hills · Kapsabet · Mosoriot · Ainamo
 - 50 mama mboga partners onboarded for pickup
 
 **Phase 2 — Scale (months 4–6)**
-- All 8 branches
+- All 11 branches
 - Native Android/iOS via React Native
 - Loyalty integrated with in-store POS (one wallet across channels)
 - Receipt OCR pipeline

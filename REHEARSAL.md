@@ -323,7 +323,7 @@ Run through this list at least twice in the 48 hours before:
 - [ ] I can deliver the opening story without reading
 - [ ] I can name the three things happening in Kenyan retail without looking
 - [ ] I can run the demo in three minutes without forgetting a feature
-- [ ] I can recite the three numbers (3.5M / 144M / 6-9 months) cold
+- [ ] I can recite the three numbers (3.5M / 175M / 4-6 months) cold
 - [ ] I have an answer ready for "what if it flops?"
 - [ ] I have an answer ready for "why not just use Glovo?"
 - [ ] I have an answer ready for "what happens if you leave?"

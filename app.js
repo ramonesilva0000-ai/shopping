@@ -7,14 +7,17 @@
 
 // ---------- BRAND CONSTANTS ----------
 const BRANCHES = [
-  { id:"kapsoit",   name:"Kapsoit" },
-  { id:"litein",    name:"Litein — Tegat Building" },
-  { id:"mogogosiek",name:"Mogogosiek" },
-  { id:"nandi",     name:"Nandi Hills" },
-  { id:"kapsabet",  name:"Kapsabet" },
-  { id:"mosoriot",  name:"Mosoriot" },
-  { id:"ainamoi",   name:"Ainamoi" },
-  { id:"eldoret",   name:"Eldoret — Serani Mall" },
+  { id:"kapsoit",     name:"Kapsoit Main" },
+  { id:"kapsoit-mini",name:"Kapsoit Mini" },
+  { id:"ainamoi",     name:"Ainamoi" },
+  { id:"litein-prime",name:"Litein Prime" },
+  { id:"litein-sq",   name:"Litein Square" },
+  { id:"mogogosiek",  name:"Mogogosiek" },
+  { id:"nandi",       name:"Nandi Hills" },
+  { id:"kapsabet-h",  name:"Kapsabet Heights" },
+  { id:"kapsabet-x",  name:"Kapsabet Express" },
+  { id:"mosoriot",    name:"Mosoriot" },
+  { id:"eldoret",     name:"Eldoret — Serani Mall" },
 ];
 
 // ---------- DEPARTMENTS ----------
@@ -405,7 +408,7 @@ function renderProduct(id){
         <span class="pdp__price-now">${fmt(p.price)}</span>
         ${p.was ? `<span class="pdp__price-old">${fmt(p.was)}</span><span class="pdp__price-save">SAVE ${save}%</span>` : ""}
       </div>
-      <p class="muted">${p.unit}. Stocked at all 8 Kipchimatt branches and our distribution warehouse.</p>
+      <p class="muted">${p.unit}. Stocked at all 11 Kipchimatt branches and our distribution warehouse.</p>
       <div class="beichart">
         <h4>📈 Bei Tracker — last 30 days</h4>
         ${chartSVG(hist)}
@@ -427,7 +430,7 @@ function renderProduct(id){
         <button class="btn btn--ghost btn--lg" id="pdpWish">${onWish?"♥ Saved":"♡ Save"}</button>
       </div>
       <div class="pdp__meta">
-        <div><strong>Delivery</strong> Same-day · 8 branches</div>
+        <div><strong>Delivery</strong> Same-day · 11 branches</div>
         <div><strong>Returns</strong> 7-day easy returns</div>
         <div><strong>Payment</strong> M-Pesa · Card · COD · Lipa Pole Pole</div>
         <div><strong>Pickup</strong> Mama Mboga points available</div>
@@ -584,11 +587,11 @@ function stepDelivery(){
     <h3>How would you like to receive your order?</h3>
     <label class="delivery-option ${d.deliveryType==='delivery'?'is-active':''}">
       <input type="radio" name="dt" value="delivery" ${d.deliveryType==='delivery'?'checked':''}>
-      <div><strong>🚚 Boda delivery</strong><small>Live tracking. Same-day around our 8 branches. Free above KSh 3,000.</small></div>
+      <div><strong>🚚 Boda delivery</strong><small>Live tracking. Same-day around our 11 branches. Free above KSh 3,000.</small></div>
     </label>
     <label class="delivery-option ${d.deliveryType==='pickup'?'is-active':''}">
       <input type="radio" name="dt" value="pickup" ${d.deliveryType==='pickup'?'checked':''}>
-      <div><strong>🏪 Branch pickup</strong><small>Free. Ready in 1 hour at any of our 8 stores.</small></div>
+      <div><strong>🏪 Branch pickup</strong><small>Free. Ready in 1 hour at any of our 11 stores.</small></div>
     </label>
     <label class="delivery-option ${d.deliveryType==='mboga'?'is-active':''}">
       <input type="radio" name="dt" value="mboga" ${d.deliveryType==='mboga'?'checked':''}>
@@ -1083,7 +1086,7 @@ function renderTuma(){
         <li>We deliver from the nearest Kipchimatt branch — they get an SMS, the package, and your voice note</li>
       </ol>
       <div style="background:var(--green-l);padding:14px;border-radius:10px;margin-top:14px">
-        <strong>📍 Available to all 8 branches:</strong><br/>
+        <strong>📍 Available to all 11 branches:</strong><br/>
         <span class="muted" style="font-size:.9rem">${BRANCHES.map(b=>b.name.split(" — ")[0]).join(" · ")}</span>
       </div>
       <button class="btn btn--gold btn--lg" data-route="catalog" style="margin-top:14px">Start shopping for them →</button>
