@@ -678,3 +678,110 @@ ul{margin:0;padding:0;list-style:none}
 
 .cdrawer__emoji{overflow:hidden}
 .cdrawer__emoji img{width:48px;height:48px;object-fit:cover;border-radius:8px;display:block}
+
+/* ===========================================================
+   ADMIN PORTAL (separate experience for Kipchimatt staff)
+   =========================================================== */
+
+/* Full-width view that escapes the .container max-width */
+.view--full{margin:0 -16px}
+
+/* Login screen */
+.adlogin{min-height:60vh;display:grid;place-items:center;padding:40px 20px}
+.adlogin__panel{background:#fff;border-radius:18px;padding:36px;max-width:420px;width:100%;box-shadow:var(--shadow-lg);border-top:6px solid var(--red)}
+.adlogin__brand{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.adlogin__brand .brand__mark{width:54px;height:46px}
+.adlogin__brand strong{font-size:1.3rem;display:block}
+.adlogin__brand small{color:var(--muted);font-style:italic}
+.adlogin h2{margin:18px 0 4px}
+.adlogin p{color:var(--muted);font-size:.9rem;margin-bottom:18px}
+.adlogin .demo{background:var(--gold-l);padding:10px 12px;border-radius:8px;font-size:.82rem;margin-top:14px;border-left:3px solid var(--yellow-d)}
+.adlogin .demo code{background:#fff;padding:1px 6px;border-radius:4px;font-weight:700}
+
+/* Admin shell */
+.admin{display:grid;grid-template-columns:240px 1fr;min-height:90vh;background:var(--bg)}
+.admin__sidebar{background:var(--ink);color:#fff;padding:20px 0;position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto}
+.admin__sidebar .brand{padding:0 20px 14px;border-bottom:1px solid #2a3140;margin-bottom:14px}
+.admin__sidebar .brand__text strong,.admin__sidebar .brand__text small{color:#fff}
+.admin-nav{padding:0 10px}
+.admin-nav button{display:flex;align-items:center;gap:10px;width:100%;padding:10px 14px;border-radius:8px;color:#cbd1da;font-weight:600;font-size:.92rem;text-align:left;margin-bottom:2px}
+.admin-nav button:hover{background:#1f2735;color:#fff}
+.admin-nav button.is-active{background:var(--red);color:#fff}
+.admin-nav__sep{height:1px;background:#2a3140;margin:10px 14px}
+.admin-nav__sep span{display:block;font-size:.7rem;text-transform:uppercase;color:#6b7280;padding:8px 0 4px;letter-spacing:1px}
+
+.admin__main{padding:24px 28px}
+.admin__head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px}
+.admin__head h2{margin:0;font-size:1.6rem}
+.admin__user{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);padding:6px 14px;border-radius:99px;font-size:.85rem}
+.admin__user .dot--live{margin-right:4px}
+
+/* KPI cards */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;position:relative;overflow:hidden}
+.kpi__label{font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700}
+.kpi__value{font-size:1.9rem;font-weight:900;color:var(--ink);margin-top:4px;line-height:1}
+.kpi__delta{font-size:.78rem;margin-top:6px;font-weight:700}
+.kpi__delta.up{color:#1aab4a}
+.kpi__delta.down{color:var(--red)}
+.kpi--red{border-top:4px solid var(--red)}
+.kpi--gold{border-top:4px solid var(--yellow)}
+.kpi--ink{border-top:4px solid var(--ink)}
+.kpi--green{border-top:4px solid #1aab4a}
+.kpi__icon{position:absolute;right:14px;top:14px;font-size:1.6rem;opacity:.5}
+
+/* Tables */
+.adtable{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:18px}
+.adtable__head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line);background:var(--bg)}
+.adtable__head h3{margin:0;font-size:1.05rem}
+.adtable table{width:100%;border-collapse:collapse;font-size:.92rem}
+.adtable th{text-align:left;padding:10px 16px;font-size:.78rem;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);background:#fafafa;border-bottom:1px solid var(--line);font-weight:700}
+.adtable td{padding:10px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
+.adtable tr:last-child td{border-bottom:0}
+.adtable tr:hover td{background:#fff8e1}
+.adtable img{width:34px;height:34px;border-radius:6px;object-fit:cover;display:inline-block;vertical-align:middle;margin-right:8px}
+.adtable__empty{padding:30px;text-align:center;color:var(--muted)}
+.adtable__actions{display:flex;gap:6px}
+.adtable__actions button{padding:4px 10px;font-size:.78rem;border-radius:6px;border:1px solid var(--line);background:#fff;font-weight:700;cursor:pointer}
+.adtable__actions button:hover{background:var(--gold-l);border-color:var(--yellow-d)}
+.adtable__actions .danger:hover{background:#fce4e4;border-color:var(--red);color:var(--red-d)}
+
+/* Inline edit fields */
+.adinp{padding:5px 8px;border:1px solid var(--line);border-radius:5px;width:90px;font:inherit;font-size:.88rem}
+.adinp:focus{outline:2px solid var(--red);border-color:var(--red)}
+.adselect{padding:5px 8px;border:1px solid var(--line);border-radius:5px;font-size:.85rem;font-weight:700;background:#fff;cursor:pointer}
+
+/* Status pills (table) */
+.pill{padding:3px 8px;border-radius:99px;font-size:.7rem;font-weight:800;letter-spacing:.3px;text-transform:uppercase}
+.pill--pending{background:#fff3cd;color:#8a6d00}
+.pill--paid{background:#cfe6d8;color:#0a5a2a}
+.pill--shipped{background:#d6e8ff;color:#0a4ea0}
+.pill--delivered{background:#cfe6d8;color:#0a5a2a}
+.pill--cancelled{background:#fce4e4;color:var(--red-d)}
+
+/* Simple bar chart (Reports view) */
+.bars{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:18px}
+.bars h3{margin:0 0 14px}
+.bar{display:grid;grid-template-columns:140px 1fr 80px;gap:10px;align-items:center;margin-bottom:6px;font-size:.88rem}
+.bar__name{font-weight:600;color:var(--ink)}
+.bar__track{height:14px;background:var(--line);border-radius:8px;overflow:hidden}
+.bar__fill{height:100%;background:linear-gradient(90deg,var(--red),var(--yellow));border-radius:8px;transition:width .6s ease}
+.bar__value{text-align:right;font-weight:800;color:var(--red);font-variant-numeric:tabular-nums}
+
+/* Forms inside admin panels */
+.adform{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:18px}
+.adform h3{margin:0 0 12px}
+.adform .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:10px}
+.adform label{display:block;font-weight:700;font-size:.82rem;margin-bottom:4px;color:var(--muted)}
+.adform input,.adform select,.adform textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;font:inherit}
+
+/* Mobile */
+@media(max-width:980px){
+  .admin{grid-template-columns:1fr}
+  .admin__sidebar{position:static;max-height:none}
+  .admin-nav{display:flex;gap:4px;overflow-x:auto;padding:0 10px 10px}
+  .admin-nav__sep{display:none}
+  .admin-nav button{flex:0 0 auto;font-size:.82rem;padding:8px 12px}
+  .admin__main{padding:14px}
+  .adtable{font-size:.78rem;overflow-x:auto}
+}

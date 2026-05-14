@@ -165,6 +165,8 @@ const defaultState = {
   pamoja:null,           // {code, members:[{id,name,initial}], items:{pid:{qty,by}}}
   bbasket:[],            // Bei Yangu basket
   spinSeen:false,        // welcome wheel
+  staff:null,            // { name, role, branch } when admin is logged in
+  productOverrides:{},   // {pid: {price, stock, deal}} — admin product edits
 };
 let state = load();
 function load(){ try{ const r=localStorage.getItem(KEY); if(!r) return clone(defaultState); return {...clone(defaultState),...JSON.parse(r)}; }catch{ return clone(defaultState); } }
@@ -204,6 +206,7 @@ function navigate(view, opts={}){
   if (view === "tuma")       renderTuma();
   if (view === "lipa")       renderLipa();
   if (view === "mamamboga")  renderMboga();
+  if (view === "admin")      renderAdmin();
 }
 
 // ---------- CART ----------
@@ -1515,5 +1518,419 @@ function init(){
   if (!state.spinSeen) setTimeout(showSpin, 1200);
 }
 document.addEventListener("DOMContentLoaded", init);
+
+// ===========================================================
+// ADMIN PORTAL
+// ===========================================================
+
+// Demo credentials. In production these'd live in a real auth system.
+const ADMIN_CREDS = [
+  { user:"admin",   pass:"kipchimatt2026", name:"Admin",          role:"Director",       branch:"HQ Kericho" },
+  { user:"manager", pass:"serani2026",     name:"Branch Manager", role:"Branch Manager", branch:"Eldoret — Serani Mall" },
+];
+
+let adminTab = "dashboard";
+
+function renderAdmin(){
+  if (!state.staff) { renderAdminLogin(); return; }
+  const v = $("#adminView");
+  v.innerHTML = `
+    <div class="admin">
+      <aside class="admin__sidebar">
+        <div class="brand">
+          <span class="brand__mark">K</span>
+          <span class="brand__text"><strong>Kipchimatt</strong><small>Staff portal</small></span>
+        </div>
+        <nav class="admin-nav">
+          <button data-atab="dashboard" class="${adminTab==='dashboard'?'is-active':''}">📊 Dashboard</button>
+          <button data-atab="orders"    class="${adminTab==='orders'?'is-active':''}">📦 Orders</button>
+          <button data-atab="products"  class="${adminTab==='products'?'is-active':''}">🛒 Products</button>
+          <button data-atab="branches"  class="${adminTab==='branches'?'is-active':''}">🏪 Branches</button>
+          <button data-atab="promos"    class="${adminTab==='promos'?'is-active':''}">💰 Promos</button>
+          <button data-atab="customers" class="${adminTab==='customers'?'is-active':''}">👥 Customers</button>
+          <button data-atab="reports"   class="${adminTab==='reports'?'is-active':''}">📈 Reports</button>
+          <div class="admin-nav__sep"><span>Account</span></div>
+          <button data-atab="settings"  class="${adminTab==='settings'?'is-active':''}">⚙️ Settings</button>
+          <button data-atab="logout">🚪 Sign out</button>
+          <div class="admin-nav__sep"><span>Customer site</span></div>
+          <button data-route="home">← Back to shop</button>
+        </nav>
+      </aside>
+      <main class="admin__main">
+        <div class="admin__head">
+          <h2 id="adminTitle">${({dashboard:"Dashboard",orders:"Orders",products:"Products",branches:"Branches",promos:"Promo codes",customers:"Customers",reports:"Reports",settings:"Settings"})[adminTab]||""}</h2>
+          <div class="admin__user">
+            <span class="dot dot--live"></span>
+            <strong>${state.staff.name}</strong> · ${state.staff.role}
+          </div>
+        </div>
+        <div id="adminPanel">${adminPanel()}</div>
+      </main>
+    </div>`;
+  v.querySelectorAll(".admin-nav button[data-atab]").forEach(b =>
+    b.addEventListener("click", () => {
+      const t = b.dataset.atab;
+      if (t === "logout") { state.staff = null; save(); navigate("home"); toast("Signed out"); return; }
+      adminTab = t; renderAdmin();
+    }));
+  bindAdminPanel();
+}
+
+function renderAdminLogin(){
+  $("#adminView").innerHTML = `
+    <div class="adlogin">
+      <div class="adlogin__panel">
+        <div class="adlogin__brand">
+          <span class="brand__mark">K</span>
+          <div><strong>Kipchimatt</strong><small>Staff portal</small></div>
+        </div>
+        <h2>Sign in</h2>
+        <p>This area is for Kipchimatt staff. Please use your assigned credentials.</p>
+        <form id="adlogForm">
+          <div class="field"><label>Username</label><input name="user" required autocomplete="username" placeholder="admin"></div>
+          <div class="field"><label>Password</label><input name="pass" type="password" required autocomplete="current-password" placeholder="••••••••"></div>
+          <button class="btn btn--primary btn--block btn--lg">Sign in</button>
+        </form>
+        <div class="demo">
+          🔐 <strong>Demo credentials for the boardroom:</strong><br/>
+          Director:   <code>admin</code> / <code>kipchimatt2026</code><br/>
+          Branch mgr: <code>manager</code> / <code>serani2026</code>
+        </div>
+      </div>
+    </div>`;
+  $("#adlogForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const d = Object.fromEntries(new FormData(e.target));
+    const match = ADMIN_CREDS.find(c => c.user === d.user.trim() && c.pass === d.pass);
+    if (!match) { toast("Wrong username or password"); return; }
+    state.staff = { name: match.name, role: match.role, branch: match.branch };
+    save(); renderAdmin(); toast(`Karibu, ${match.name}`);
+  });
+}
+
+function adminPanel(){
+  if (adminTab === "dashboard") return adminDashboard();
+  if (adminTab === "orders")    return adminOrders();
+  if (adminTab === "products")  return adminProducts();
+  if (adminTab === "branches")  return adminBranches();
+  if (adminTab === "promos")    return adminPromos();
+  if (adminTab === "customers") return adminCustomers();
+  if (adminTab === "reports")   return adminReports();
+  if (adminTab === "settings")  return adminSettings();
+  return "";
+}
+
+// ---------- ADMIN: DASHBOARD ----------
+function adminDashboard(){
+  const orders = state.orders || [];
+  const today = new Date(); today.setHours(0,0,0,0);
+  const todayOrders = orders.filter(o => new Date(o.placedAt) >= today);
+  const revToday = todayOrders.reduce((s,o)=> s + o.total, 0);
+  const revTotal = orders.reduce((s,o)=> s + o.total, 0);
+  const pending = orders.filter(o => o.status === "pending" || o.status === "paid").length;
+  const avgBasket = orders.length ? revTotal / orders.length : 0;
+  return `
+    <div class="kpis">
+      <div class="kpi kpi--red"><span class="kpi__icon">📦</span>
+        <div class="kpi__label">Orders today</div><div class="kpi__value">${todayOrders.length}</div>
+        <div class="kpi__delta up">▲ ${Math.max(1, Math.round(todayOrders.length*0.18))} vs yesterday</div></div>
+      <div class="kpi kpi--gold"><span class="kpi__icon">💰</span>
+        <div class="kpi__label">Revenue today</div><div class="kpi__value">${fmt(revToday)}</div>
+        <div class="kpi__delta up">▲ 12.4% vs yesterday</div></div>
+      <div class="kpi kpi--ink"><span class="kpi__icon">⏳</span>
+        <div class="kpi__label">Pending fulfilment</div><div class="kpi__value">${pending}</div>
+        <div class="kpi__delta ${pending>3?'down':'up'}">${pending>3?'Action needed':'Healthy'}</div></div>
+      <div class="kpi kpi--green"><span class="kpi__icon">🧾</span>
+        <div class="kpi__label">Avg basket</div><div class="kpi__value">${fmt(avgBasket)}</div>
+        <div class="kpi__delta up">▲ 3.1% this week</div></div>
+    </div>
+    <div class="adtable">
+      <div class="adtable__head"><h3>Recent orders</h3><button class="btn btn--ghost btn--sm" data-go-tab="orders">See all →</button></div>
+      ${orders.length ? `
+        <table>
+          <thead><tr><th>Order</th><th>Time</th><th>Items</th><th>Total</th><th>Status</th></tr></thead>
+          <tbody>${orders.slice(0,6).map(o => `<tr>
+            <td><strong>${o.id}</strong></td>
+            <td>${new Date(o.placedAt).toLocaleTimeString("en-KE",{hour:"2-digit",minute:"2-digit"})}</td>
+            <td>${o.items.length}</td>
+            <td><strong>${fmt(o.total)}</strong></td>
+            <td><span class="pill pill--${o.status}">${o.status}</span></td>
+          </tr>`).join("")}</tbody>
+        </table>` : `<div class="adtable__empty">No orders yet. Place a test order from the customer site to see it appear here.</div>`}
+    </div>`;
+}
+
+// ---------- ADMIN: ORDERS ----------
+function adminOrders(){
+  const orders = state.orders || [];
+  if (!orders.length) return `<div class="adtable"><div class="adtable__empty">No orders yet. Place one from the customer site to see it here.</div></div>`;
+  return `
+    <div class="adtable">
+      <div class="adtable__head"><h3>${orders.length} order${orders.length===1?"":"s"}</h3></div>
+      <table>
+        <thead><tr><th>Order</th><th>Placed</th><th>Items</th><th>Delivery</th><th>Payment</th><th>Total</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          ${orders.map(o => `<tr data-oid="${o.id}">
+            <td><strong>${o.id}</strong></td>
+            <td>${new Date(o.placedAt).toLocaleString("en-KE",{dateStyle:"short",timeStyle:"short"})}</td>
+            <td>${o.items.length}</td>
+            <td>${o.delivery_type||"delivery"}</td>
+            <td>${o.payment||"mpesa"}</td>
+            <td><strong>${fmt(o.total)}</strong></td>
+            <td>
+              <select class="adselect" data-oid="${o.id}">
+                ${["pending","paid","shipped","delivered","cancelled"].map(s=>`<option ${o.status===s?"selected":""}>${s}</option>`).join("")}
+              </select>
+            </td>
+            <td class="adtable__actions"><button data-view-order="${o.id}">View</button></td>
+          </tr>`).join("")}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+// ---------- ADMIN: PRODUCTS ----------
+function adminProducts(){
+  return `
+    <div class="adtable">
+      <div class="adtable__head">
+        <h3>${PRODUCTS.length} products</h3>
+        <input id="adProdSearch" placeholder="Search products…" class="adinp" style="width:200px">
+      </div>
+      <table id="adProdTable">
+        <thead><tr><th>Product</th><th>Category</th><th>Price (KSh)</th><th>Stock</th><th>On offer</th><th></th></tr></thead>
+        <tbody>
+          ${PRODUCTS.map(p => {
+            const o = state.productOverrides[p.id] || {};
+            const price = o.price ?? p.price;
+            const stock = o.stock ?? (p.stock ?? 50);
+            const deal  = o.deal  ?? p.deal ?? false;
+            return `<tr data-pid="${p.id}">
+              <td>${p.img ? `<img src="${p.img}" alt="">` : `<span style="display:inline-block;width:34px;height:34px;background:var(--gold-l);border-radius:6px;text-align:center;line-height:34px;margin-right:8px">${p.emoji}</span>`}<strong>${p.name}</strong></td>
+              <td>${(CATEGORIES.find(c=>c.id===p.cat)||{}).name||""}</td>
+              <td><input class="adinp" type="number" data-edit="price" value="${price}" min="0"></td>
+              <td><input class="adinp" type="number" data-edit="stock" value="${stock}" min="0"></td>
+              <td><input type="checkbox" data-edit="deal" ${deal?"checked":""}></td>
+              <td class="adtable__actions"><button data-save-prod="${p.id}">Save</button></td>
+            </tr>`;
+          }).join("")}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+// ---------- ADMIN: BRANCHES ----------
+function adminBranches(){
+  const orders = state.orders || [];
+  return `
+    <div class="adtable">
+      <div class="adtable__head"><h3>${BRANCHES.length} branches</h3></div>
+      <table>
+        <thead><tr><th>Branch</th><th>Pickup orders</th><th>Status</th></tr></thead>
+        <tbody>
+          ${BRANCHES.map(b => {
+            const count = orders.filter(o => o.where && o.where.branch === b.name).length;
+            return `<tr>
+              <td><strong>${b.name}</strong></td>
+              <td>${count}</td>
+              <td><span class="pill pill--paid">Online</span></td>
+            </tr>`;
+          }).join("")}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+// ---------- ADMIN: PROMOS ----------
+function adminPromos(){
+  const codes = Object.entries(PROMOS);
+  return `
+    <div class="adtable">
+      <div class="adtable__head"><h3>${codes.length} active promo codes</h3></div>
+      <table>
+        <thead><tr><th>Code</th><th>Discount</th><th>Type</th></tr></thead>
+        <tbody>
+          ${codes.map(([code,c]) => `<tr>
+            <td><strong style="font-family:monospace">${code}</strong></td>
+            <td>${c.type==="pct"?`${c.value}% off`:`${fmt(c.value)} off`}</td>
+            <td>${c.type==="pct"?"Percentage":"Flat amount"}</td>
+          </tr>`).join("")}
+        </tbody>
+      </table>
+    </div>
+    <p class="muted">In production this becomes a CRUD form where you create/expire promos with usage limits and start/end dates.</p>`;
+}
+
+// ---------- ADMIN: CUSTOMERS ----------
+function adminCustomers(){
+  const u = state.user;
+  return `
+    <div class="adtable">
+      <div class="adtable__head"><h3>${u?1:0} registered customer${!u||u?'':"s"}</h3></div>
+      ${u ? `<table>
+        <thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Orders</th><th>Lifetime value</th><th>Points</th></tr></thead>
+        <tbody><tr>
+          <td><strong>${u.name}</strong></td>
+          <td>${u.phone}</td>
+          <td>${u.email||"—"}</td>
+          <td>${state.orders.length}</td>
+          <td><strong>${fmt(state.orders.reduce((s,o)=>s+o.total,0))}</strong></td>
+          <td>${state.rewardsPoints} pts</td>
+        </tr></tbody></table>` : `<div class="adtable__empty">No customers signed up yet on this browser. Sign in as a customer to see the customer list populate here.</div>`}
+    </div>`;
+}
+
+// ---------- ADMIN: REPORTS ----------
+function adminReports(){
+  const orders = state.orders || [];
+  if (!orders.length) return `<div class="adtable"><div class="adtable__empty">No data yet. Place orders to see reports populate.</div></div>`;
+  // Top categories by revenue
+  const byCat = {};
+  orders.forEach(o => o.items.forEach(i => {
+    const p = findProduct(i.id); if (!p) return;
+    byCat[p.cat] = (byCat[p.cat]||0) + p.price * i.qty;
+  }));
+  const rows = Object.entries(byCat).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const max = Math.max(...rows.map(r=>r[1]),1);
+  // Revenue by payment method
+  const byPay = {};
+  orders.forEach(o => { byPay[o.payment||"mpesa"] = (byPay[o.payment||"mpesa"]||0) + o.total; });
+  const payRows = Object.entries(byPay).sort((a,b)=>b[1]-a[1]);
+  const payMax = Math.max(...payRows.map(r=>r[1]),1);
+  return `
+    <div class="bars">
+      <h3>Revenue by category</h3>
+      ${rows.map(([cat,rev]) => `<div class="bar">
+        <span class="bar__name">${(CATEGORIES.find(c=>c.id===cat)||{name:cat}).name}</span>
+        <div class="bar__track"><div class="bar__fill" style="width:${rev/max*100}%"></div></div>
+        <span class="bar__value">${fmt(rev)}</span>
+      </div>`).join("")}
+    </div>
+    <div class="bars">
+      <h3>Revenue by payment method</h3>
+      ${payRows.map(([m,rev]) => `<div class="bar">
+        <span class="bar__name">${m.toUpperCase()}</span>
+        <div class="bar__track"><div class="bar__fill" style="width:${rev/payMax*100}%"></div></div>
+        <span class="bar__value">${fmt(rev)}</span>
+      </div>`).join("")}
+    </div>`;
+}
+
+// ---------- ADMIN: SETTINGS ----------
+function adminSettings(){
+  return `
+    <div class="adform">
+      <h3>Profile</h3>
+      <div class="row">
+        <div><label>Name</label><input value="${state.staff.name}" disabled></div>
+        <div><label>Role</label><input value="${state.staff.role}" disabled></div>
+        <div><label>Branch</label><input value="${state.staff.branch}" disabled></div>
+      </div>
+      <p class="muted" style="font-size:.85rem;margin:0">Profile editing is a Phase 2 feature. For now, contact the system administrator.</p>
+    </div>
+    <div class="adform">
+      <h3>Security</h3>
+      <p class="muted">For the production app we'll add: password change, 2FA via SMS, session timeout, audit log of staff actions.</p>
+    </div>
+    <div class="adform">
+      <h3>Danger zone</h3>
+      <button class="btn btn--danger" id="adResetData">Reset all demo data</button>
+      <p class="muted" style="font-size:.85rem;margin-top:8px">Wipes orders, cart, wishlist and product overrides. Useful before a fresh demo. Does not delete staff sessions.</p>
+    </div>`;
+}
+
+// ---------- ADMIN: bind interactive controls ----------
+function bindAdminPanel(){
+  // Tab navigation from inside panel
+  $$("[data-go-tab]").forEach(b => b.addEventListener("click", () => { adminTab = b.dataset.goTab; renderAdmin(); }));
+
+  // Order status changes
+  $$(".admin select.adselect[data-oid]").forEach(sel => sel.addEventListener("change", e => {
+    const o = state.orders.find(x => x.id === sel.dataset.oid);
+    if (!o) return;
+    o.status = sel.value;
+    save();
+    toast(`✓ ${o.id} marked ${sel.value}`);
+  }));
+
+  // View order details
+  $$("[data-view-order]").forEach(b => b.addEventListener("click", () => {
+    const o = state.orders.find(x => x.id === b.dataset.viewOrder);
+    if (!o) return;
+    openModal(`
+      <h2>Order ${o.id}</h2>
+      <p class="muted">Placed ${new Date(o.placedAt).toLocaleString("en-KE")}</p>
+      <h4 style="margin-top:14px">Items</h4>
+      ${o.items.map(i => `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed var(--line);font-size:.9rem"><span>${i.emoji||""} ${i.name} × ${i.qty}</span><span><strong>${fmt(i.price*i.qty)}</strong></span></div>`).join("")}
+      <p style="margin-top:14px"><strong>Total:</strong> ${fmt(o.total)}</p>
+      <p><strong>Payment:</strong> ${o.payment}</p>
+      <p><strong>Status:</strong> <span class="pill pill--${o.status}">${o.status}</span></p>
+      <p><strong>Where:</strong> ${o.where && o.where.branch ? `Pickup at ${o.where.branch}` : o.where && o.where.line1 ? `${o.where.name}, ${o.where.phone} — ${o.where.line1}, ${o.where.town}` : o.where && o.where.kiosk ? `Mama Mboga: ${o.where.kiosk}` : o.where && o.where.recipient ? `Tuma to ${o.where.recipient.name}` : "—"}</p>
+    `);
+  }));
+
+  // Product save (price/stock/deal)
+  $$("[data-save-prod]").forEach(b => b.addEventListener("click", () => {
+    const pid = b.dataset.saveProd;
+    const row = b.closest("tr");
+    const newPrice = parseInt(row.querySelector('[data-edit="price"]').value) || 0;
+    const newStock = parseInt(row.querySelector('[data-edit="stock"]').value) || 0;
+    const newDeal  = row.querySelector('[data-edit="deal"]').checked;
+    state.productOverrides[pid] = { price:newPrice, stock:newStock, deal:newDeal };
+    // Apply override to the live PRODUCTS array
+    const p = findProduct(pid);
+    if (p) { p.price = newPrice; p.deal = newDeal; p.stock = newStock; }
+    save();
+    toast(`✓ Saved ${p ? p.name.split(" - ")[0] : pid}`);
+    // Refresh any visible product card so customer pages stay in sync
+    renderHome();
+  }));
+
+  // Product search filter
+  const search = $("#adProdSearch");
+  if (search) search.addEventListener("input", () => {
+    const q = search.value.toLowerCase();
+    $$("#adProdTable tbody tr").forEach(tr => {
+      const name = tr.querySelector("strong").textContent.toLowerCase();
+      tr.style.display = name.includes(q) ? "" : "none";
+    });
+  });
+
+  // Reset demo data
+  const r = $("#adResetData");
+  if (r) r.addEventListener("click", () => {
+    openModal(`<div style="text-align:center">
+      <div style="font-size:3rem">⚠️</div>
+      <h2>Reset all demo data?</h2>
+      <p class="muted">Clears all orders, the cart, wishlist, promo and product overrides. Your admin session stays.</p>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
+        <button class="btn btn--ghost" data-close>Cancel</button>
+        <button class="btn btn--danger" id="confirmReset">Yes, reset</button>
+      </div>
+    </div>`);
+    $("#confirmReset").addEventListener("click", () => {
+      const keepStaff = state.staff;
+      state = clone(defaultState);
+      state.staff = keepStaff;
+      save(); refreshHeader(); closeModal(); renderAdmin();
+      toast("✓ Demo data reset");
+    });
+  });
+}
+
+// Apply product overrides on init so price changes persist across reloads
+function applyProductOverrides(){
+  if (!state.productOverrides) return;
+  Object.entries(state.productOverrides).forEach(([pid, o]) => {
+    const p = findProduct(pid);
+    if (!p) return;
+    if (o.price != null) p.price = o.price;
+    if (o.stock != null) p.stock = o.stock;
+    if (o.deal  != null) p.deal  = o.deal;
+  });
+}
+// Patch init to apply overrides
+const __init__ = init;
+init = function(){ applyProductOverrides(); __init__(); };
 
 })();
