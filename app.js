@@ -40,34 +40,34 @@ const CATEGORIES = [
 // "house" = Kipchimchim house brand (Kipchimatt Bread, Mbogo Tea/Water, Valley Sugar, Keben Tea)
 const PRODUCTS = [
   // Fresh
-  { id:"p1",  name:"Sukuma Wiki - 1 bunch",        price:30,  was:40,  cat:"fresh", emoji:"🥬", unit:"per bunch", rating:4.7, deal:true },
-  { id:"p2",  name:"Tomatoes - 1 kg",               price:120, was:150, cat:"fresh", emoji:"🍅", unit:"per kg",    rating:4.6, deal:true },
-  { id:"p3",  name:"Sweet Bananas - 1 kg",          price:90,  was:null,cat:"fresh", emoji:"🍌", unit:"per kg",    rating:4.5 },
+  { id:"p1",  name:"Sukuma Wiki - 1 bunch",        price:30,  was:40,  cat:"fresh", emoji:"🥬", unit:"per bunch", rating:4.7, deal:true, img:"img/p1.png" },
+  { id:"p2",  name:"Tomatoes - 1 kg",               price:120, was:150, cat:"fresh", emoji:"🍅", unit:"per kg",    rating:4.6, deal:true, img:"img/p2.avif" },
+  { id:"p3",  name:"Sweet Bananas - 1 kg",          price:90,  was:null,cat:"fresh", emoji:"🍌", unit:"per kg",    rating:4.5, img:"img/p3.jpg" },
   { id:"p4",  name:"Avocado (Hass) - 4 pcs",        price:200, was:240, cat:"fresh", emoji:"🥑", unit:"pack of 4", rating:4.8, deal:true },
-  { id:"p5",  name:"Red Onions - 1 kg",             price:110, was:null,cat:"fresh", emoji:"🧅", unit:"per kg",    rating:4.4 },
-  { id:"p6",  name:"Mangoes - 6 pcs",               price:350, was:null,cat:"fresh", emoji:"🥭", unit:"pack of 6", rating:4.9 },
-  { id:"p7",  name:"Carrots - 1 kg",                price:80,  was:null,cat:"fresh", emoji:"🥕", unit:"per kg",    rating:4.5 },
-  { id:"p8",  name:"Dhania (Coriander) bunch",      price:20,  was:null,cat:"fresh", emoji:"🌿", unit:"per bunch", rating:4.5 },
+  { id:"p5",  name:"Red Onions - 1 kg",             price:110, was:null,cat:"fresh", emoji:"🧅", unit:"per kg",    rating:4.4, img:"img/p5.jpg" },
+  { id:"p6",  name:"Mangoes - 6 pcs",               price:350, was:null,cat:"fresh", emoji:"🥭", unit:"pack of 6", rating:4.9, img:"img/p6.jpg" },
+  { id:"p7",  name:"Carrots - 1 kg",                price:80,  was:null,cat:"fresh", emoji:"🥕", unit:"per kg",    rating:4.5, img:"img/p7.webp" },
+  { id:"p8",  name:"Dhania (Coriander) bunch",      price:20,  was:null,cat:"fresh", emoji:"🌿", unit:"per bunch", rating:4.5, img:"img/p8.jpg" },
   // Bakery
   { id:"p10", name:"Kipchimatt Bread White 400g",   price:65,  was:null,cat:"bakery",emoji:"🍞", unit:"400 g",     rating:4.8, house:true },
   { id:"p11", name:"Kipchimatt Bread Brown 600g",   price:90,  was:null,cat:"bakery",emoji:"🥖", unit:"600 g",     rating:4.7, house:true },
-  { id:"p12", name:"Mandazi - pack of 6",           price:120, was:150, cat:"bakery",emoji:"🥐", unit:"pack of 6", rating:4.8, deal:true },
+  { id:"p12", name:"Mandazi - pack of 6",           price:120, was:150, cat:"bakery",emoji:"🥐", unit:"pack of 6", rating:4.8, deal:true, img:"img/p12.jpg" },
   { id:"p13", name:"Birthday Cake (Vanilla) 1kg",   price:1500,was:null,cat:"bakery",emoji:"🎂", unit:"1 kg",      rating:4.9 },
   // Dairy
   { id:"p20", name:"Brookside Fresh Milk 500ml",    price:60,  was:null,cat:"dairy", emoji:"🥛", unit:"500 ml",    rating:4.7 },
   { id:"p21", name:"KCC Mala 500ml",                price:70,  was:null,cat:"dairy", emoji:"🥛", unit:"500 ml",    rating:4.6 },
-  { id:"p22", name:"Eggs - tray of 30",             price:480, was:540, cat:"dairy", emoji:"🥚", unit:"tray of 30",rating:4.8, deal:true },
+  { id:"p22", name:"Eggs - tray of 30",             price:480, was:540, cat:"dairy", emoji:"🥚", unit:"tray of 30",rating:4.8, deal:true, img:"img/p22.jpg" },
   { id:"p23", name:"Cheddar Cheese 250g",           price:380, was:null,cat:"dairy", emoji:"🧀", unit:"250 g",     rating:4.5 },
   { id:"p24", name:"Blue Band 500g",                price:320, was:null,cat:"dairy", emoji:"🧈", unit:"500 g",     rating:4.6 },
   // Butchery
   { id:"p30", name:"Beef (with bone) - 1 kg",       price:650, was:null,cat:"butchery",emoji:"🥩", unit:"per kg",   rating:4.6 },
   { id:"p31", name:"Goat Meat - 1 kg",              price:750, was:null,cat:"butchery",emoji:"🍖", unit:"per kg",   rating:4.7 },
-  { id:"p32", name:"Whole Chicken - 1.2 kg",        price:750, was:850, cat:"butchery",emoji:"🍗", unit:"each",     rating:4.8, deal:true },
+  { id:"p32", name:"Whole Chicken - 1.2 kg",        price:750, was:850, cat:"butchery",emoji:"🍗", unit:"each",     rating:4.8, deal:true, img:"img/p32.avif" },
   { id:"p33", name:"Beef Sausages 500g",            price:380, was:null,cat:"butchery",emoji:"🌭", unit:"500 g",    rating:4.5 },
   // Pantry  (house brands prominently)
-  { id:"p40", name:"Soko Maize Flour 2kg",          price:195, was:220, cat:"pantry",emoji:"🌾", unit:"2 kg",      rating:4.7, deal:true },
+  { id:"p40", name:"Soko Maize Flour 2kg",          price:195, was:220, cat:"pantry",emoji:"🌾", unit:"2 kg",      rating:4.7, deal:true, img:"img/p40.png" },
   { id:"p41", name:"Pembe Wheat Flour 2kg",         price:230, was:null,cat:"pantry",emoji:"🌾", unit:"2 kg",      rating:4.5 },
-  { id:"p42", name:"Mwea Pishori Rice 2kg",         price:480, was:540, cat:"pantry",emoji:"🍚", unit:"2 kg",      rating:4.9, deal:true },
+  { id:"p42", name:"Mwea Pishori Rice 2kg",         price:480, was:540, cat:"pantry",emoji:"🍚", unit:"2 kg",      rating:4.9, deal:true, img:"img/p42.jpg" },
   { id:"p43", name:"Valley Sugar 2kg",              price:320, was:360, cat:"pantry",emoji:"🟫", unit:"2 kg",      rating:4.8, deal:true, house:true },
   { id:"p44", name:"Salt 1kg",                      price:45,  was:null,cat:"pantry",emoji:"🧂", unit:"1 kg",      rating:4.5 },
   { id:"p45", name:"Cooking Oil (Rina) 3L",         price:1100,was:1300,cat:"pantry",emoji:"🛢️",unit:"3 L",        rating:4.8, deal:true },
@@ -93,13 +93,13 @@ const PRODUCTS = [
   { id:"p81", name:"Lifebuoy Soap 4-pack",          price:240, was:280, cat:"beauty",emoji:"🧼",unit:"4-pack",     rating:4.5, deal:true },
   { id:"p82", name:"Nivea Lotion 400ml",            price:520, was:null,cat:"beauty",emoji:"🧴",unit:"400 ml",     rating:4.6 },
   // Electronics  (Lipa Pole Pole eligible >5000)
-  { id:"p90", name:"Samsung 43\" Smart TV",         price:38500,was:45000,cat:"electronics",emoji:"📺",unit:"each",rating:4.7,deal:true },
-  { id:"p91", name:"Hotpoint Microwave 20L",        price:9500, was:null, cat:"electronics",emoji:"🍲",unit:"each",rating:4.5 },
-  { id:"p92", name:"Ramtons Blender 500W",          price:4200, was:4900, cat:"electronics",emoji:"🫙",unit:"each",rating:4.6, deal:true },
-  { id:"p93", name:"Sun King Solar Lantern",        price:1800, was:null, cat:"electronics",emoji:"🔦",unit:"each",rating:4.8 },
-  { id:"p94", name:"Anker Power Bank 20000mAh",     price:2900, was:null, cat:"electronics",emoji:"🔋",unit:"each",rating:4.7 },
-  { id:"p95", name:"JBL Go Bluetooth Speaker",      price:3400, was:3900, cat:"electronics",emoji:"🔊",unit:"each",rating:4.6, deal:true },
-  { id:"p96", name:"Iron Box (Ramtons)",            price:1800, was:null, cat:"electronics",emoji:"♨️",unit:"each",rating:4.5 },
+  { id:"p90", name:"Samsung 43\" Smart TV",         price:38500,was:45000,cat:"electronics",emoji:"📺",unit:"each",rating:4.7,deal:true, img:"img/p90.jpg" },
+  { id:"p91", name:"Hotpoint Microwave 20L",        price:9500, was:null, cat:"electronics",emoji:"🍲",unit:"each",rating:4.5, img:"img/p91.jpg" },
+  { id:"p92", name:"Ramtons Blender 500W",          price:4200, was:4900, cat:"electronics",emoji:"🫙",unit:"each",rating:4.6, deal:true, img:"img/p92.jpg" },
+  { id:"p93", name:"Sun King Solar Lantern",        price:1800, was:null, cat:"electronics",emoji:"🔦",unit:"each",rating:4.8, img:"img/p93.jpg" },
+  { id:"p94", name:"Anker Power Bank 20000mAh",     price:2900, was:null, cat:"electronics",emoji:"🔋",unit:"each",rating:4.7, img:"img/p94.webp" },
+  { id:"p95", name:"JBL Go Bluetooth Speaker",      price:3400, was:3900, cat:"electronics",emoji:"🔊",unit:"each",rating:4.6, deal:true, img:"img/p95.jpg" },
+  { id:"p96", name:"Iron Box (Ramtons)",            price:1800, was:null, cat:"electronics",emoji:"♨️",unit:"each",rating:4.5, img:"img/p96.jpg" },
   // Stationery
   { id:"p100",name:"Exercise Books 32-pg (10)",     price:320, was:380, cat:"stationery",emoji:"📒",unit:"10-pack",rating:4.6, deal:true },
   { id:"p101",name:"Bic Pens (10-pack)",            price:150, was:null,cat:"stationery",emoji:"🖊️",unit:"10-pack",rating:4.5 },
@@ -269,7 +269,8 @@ function productCard(p){
           ${isLipaEligible(p) ? `<span class="tag tag--lipa">LIPA POLE POLE</span>` : ""}
         </div>
         <button class="product__wish ${onWish?"is-on":""}" data-action="wish" aria-label="Save">${onWish?"♥":"♡"}</button>
-        <span aria-hidden="true">${p.emoji}</span>
+        ${p.img ? `<img class="product__img" loading="lazy" src="${p.img}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">` : ""}
+        <span class="product__emoji" aria-hidden="true" ${p.img?'style="display:none"':''}>${p.emoji}</span>
       </div>
       <div class="product__name" data-action="view">${p.name}</div>
       <div class="product__rating">${stars(p.rating)} <span>${p.rating.toFixed(1)}</span></div>
@@ -399,7 +400,7 @@ function renderProduct(id){
   const verdict = trend ? `Bei imeshuka ${Math.round((1-now/earlier)*100)}% in 30 days — good time to buy.` :
                           `Bei imepanda ${Math.round((now/earlier-1)*100)}% in 30 days.`;
   $("#pdp").innerHTML = `
-    <div class="pdp__media">${p.emoji}</div>
+    <div class="pdp__media">${p.img ? `<img class="pdp__img" src="${p.img}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="pdp__emoji" style="display:none">${p.emoji}</span>` : p.emoji}</div>
     <div>
       <span class="muted">${(CATEGORIES.find(c=>c.id===p.cat)||{}).name||""}${p.house?" · House Brand":""}</span>
       <h1 class="pdp__title">${p.name}</h1>
@@ -478,7 +479,7 @@ function renderCart(){
       </div>
       ${items.map(({p,qty,by}) => `
         <div class="cart-line" data-id="${p.id}">
-          <div class="cart-line__media">${p.emoji}${by?`<span class="cart-line__avatar">${initials(by)}</span>`:""}</div>
+          <div class="cart-line__media">${p.img ? `<img loading="lazy" src="${p.img}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none">${p.emoji}</span>` : p.emoji}${by?`<span class="cart-line__avatar">${initials(by)}</span>`:""}</div>
           <div>
             <div class="cart-line__name">${p.name}</div>
             <div class="cart-line__price">${fmt(p.price)} <small class="muted">/ ${p.unit}</small></div>
@@ -1349,7 +1350,7 @@ function openCartDrawer(latestProduct, qty){
   const pct = Math.min(100, (sub / 3000) * 100);
   $("#cartDrawerBody").innerHTML = items.slice(0,5).map(({p,qty}) => `
     <div class="cdrawer__line">
-      <div class="cdrawer__emoji">${p.emoji}</div>
+      <div class="cdrawer__emoji">${p.img ? `<img loading="lazy" src="${p.img}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none">${p.emoji}</span>` : p.emoji}</div>
       <div style="flex:1">
         <div class="cdrawer__name">${p.name.split(" - ")[0]}</div>
         <div class="cdrawer__price">${fmt(p.price)} × ${qty}</div>
