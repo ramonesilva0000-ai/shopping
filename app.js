@@ -43,7 +43,7 @@ const PRODUCTS = [
   { id:"p1",  name:"Sukuma Wiki - 1 bunch",        price:30,  was:40,  cat:"fresh", emoji:"🥬", unit:"per bunch", rating:4.7, deal:true, img:"img/p1.png" },
   { id:"p2",  name:"Tomatoes - 1 kg",               price:120, was:150, cat:"fresh", emoji:"🍅", unit:"per kg",    rating:4.6, deal:true, img:"img/p2.avif" },
   { id:"p3",  name:"Sweet Bananas - 1 kg",          price:90,  was:null,cat:"fresh", emoji:"🍌", unit:"per kg",    rating:4.5, img:"img/p3.jpg" },
-  { id:"p4",  name:"Avocado (Hass) - 4 pcs",        price:200, was:240, cat:"fresh", emoji:"🥑", unit:"pack of 4", rating:4.8, deal:true },
+  { id:"p4",  name:"Avocado (Hass) - 4 pcs",        price:200, was:240, cat:"fresh", emoji:"🥑", unit:"pack of 4", rating:4.8, deal:true, img:"img/p4.webp" },
   { id:"p5",  name:"Red Onions - 1 kg",             price:110, was:null,cat:"fresh", emoji:"🧅", unit:"per kg",    rating:4.4, img:"img/p5.jpg" },
   { id:"p6",  name:"Mangoes - 6 pcs",               price:350, was:null,cat:"fresh", emoji:"🥭", unit:"pack of 6", rating:4.9, img:"img/p6.jpg" },
   { id:"p7",  name:"Carrots - 1 kg",                price:80,  was:null,cat:"fresh", emoji:"🥕", unit:"per kg",    rating:4.5, img:"img/p7.webp" },
