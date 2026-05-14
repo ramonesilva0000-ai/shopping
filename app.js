@@ -782,7 +782,7 @@ function renderOrders(){
   v.innerHTML = state.orders.map(o => {
     const stepIdx = o.status==="delivered"?5:o.status==="shipped"?3:o.status==="paid"?2:1;
     const date = new Date(o.placedAt).toLocaleString("en-KE", {dateStyle:"medium",timeStyle:"short"});
-    const showMap = o.delivery_type==="delivery" && stepIdx >= 2;
+    const showMap = o.delivery_type==="delivery" && (o.status === "paid" || o.status === "shipped");
     return `<div class="order">
       <div class="order__head">
         <div><div class="order__id">${o.id}</div><div class="muted" style="font-size:.85rem">Placed ${date} · ${fmt(o.total)}</div></div>
